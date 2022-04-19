@@ -15,5 +15,10 @@ var connection = mysql.createConnection({
     if (error) throw error;
     console.log('The solution is: ', results[0].solution);
   });
-   
+   /*
+  connection.query('image_HTML_URl', function (error, results, fields) {
+    if (error) throw error;
+    console.log('The solution is: ', results[0].solution);
+  });
+*/
   connection.end();

@@ -5,31 +5,12 @@ const mysql = require('mysql');
 const app = express();
 
 
-
-// app.use(express.static('public'));
-// app.use(express.text());
-// app.use(fileUpload());
-// app.use(express.raw({ type: 'image/*', limit: '5mb' }));
-
+app.use(express.static('public'));
+app.use(express.text());
+app.use(fileUpload());
+app.use(express.raw({ type: 'image/*', limit: '5mb' }));
 
 
-var connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : 'example',
-  database : 'mysql'
-});
- 
-connection.connect();
- 
-connection.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
-  if (error) throw error;
-  console.log('The solution is: ', results[0].solution);
-});
- 
-connection.end();
-
-/*
 app.post('/api/single-file', (req, res) => {
   const contentType = req.header('content-type');
   if (contentType.includes('text/plain')) {
@@ -54,4 +35,3 @@ app.get('/', (req, res) => {
 app.listen(3000, () => {
   console.log('listening on port 3000');
 });
-*/

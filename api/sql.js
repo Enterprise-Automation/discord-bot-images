@@ -38,31 +38,21 @@ let sqlFuncation = {
     });
 
   },
-  insert: function (newData, resolve, reject) {
-    fs.readFile(FILE_NAME, function (err, data) {
+  getByName: function (name, resolve, reject) {
+
+    connection.query(`SELECT * FROM image_HTML_URl WHERE Name_of_image=${name}`, function (err, result, fields) {
       if (err) {
         reject(err)
-      } else {
-
-
-        connection.query(` CREATE image_HTML_URl 'sammy'@'localhost' IDENTIFIED BY 'password 
-
-       ${id}`, function (err, result, fields) {
-          if (err) throw err;
-          resolve(result);
-        });
       }
-    })
+      resolve(result);
+    });
+
+  },
+  insert: function (newData, resolve, reject) {
+
   },
   delete: function (id, resolve, reject) {
-    fs.readFile(FILE_NAME, function (err, data) {
-      if (err) {
-        reject(err)
-      } else {
 
-
-      }
-    })
   }
   
 }

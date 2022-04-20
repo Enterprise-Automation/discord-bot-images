@@ -1,55 +1,67 @@
 
 const express = require('express');
 const fileUpload = require('express-fileupload');
+let sql = require('./sql.js')
 const path = require('path');
-const mysql = require('mysql');
 const app = express();
 
+//!image.random cat 
+//!image.search id
+//!image.search title
 
 app.use(express.static('public'));
 app.use(express.text());
 app.use(fileUpload());
 app.use(express.raw({ type: 'image/*', limit: '5mb' }));
 
+let router = express.Router();
 
-app.post('/api/single-file', (req, res) => {
-  const contentType = req.header('content-type');
-  if (contentType.includes('text/plain')) {
-      res.set('Content-Type', 'text/plain');
-      res.send(req.body);
-  } else if (contentType.includes('multipart/form-data')) {
-      const f = req.files.myfile;
-      res.set('Content-Type', 'text/html');
-      f.mv('./uploads/' + f.name);
-      res.send(`${f.name}, ${f.size}, ${f.mimetype}`);
-  } else {
-      res.set('Content-Type', contentType);
-      res.send(req.body);
-  }
+app.use('/api/', router);
+
+
+
+router.get('/', function (req, res, next) {
+  sql.get(function (data) {
+    res.status(200).json({
+      'status': 200,
+      'statusText': 'OK',
+      'message': 'All facts retrieved',
+      'data': data
+    });
+  },
+    function (err) {
+      next(err);
+    });
 });
 
 
-app.get('/', (req, res) => {
-  res.send('Hello from my appHi');
+router.get('/:id', function (req, res, next) {
+  sql.getById(req.params.id, function (data) {
+    if (data) {
+      res.status(200).json({
+        'status': 200,
+        'statusText': 'OK',
+        'message': 'All images retrieved',
+        'data': data
+      });
+    } else {
+      res.status(404).json({
+        'status': 404,
+        'statusText': 'Not found',
+        'message': `Image: '${req.params.id}' not be found.`,
+        'error': {
+          "code": "NOT_FOUND",
+          "message": `Image: '${req.params.id}' not be found.`
+        }
+      });
+    }
+  }, function (err) {
+    next(err);
+  });
 });
 
 
-
-var connection = mysql.createConnection({
-    host     : 'localhost',
-    user     : 'root',
-    password : 'example',
-    database : 'mysql'
-  });
-   
-  connection.connect();
-   
-  connection.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
-    if (error) throw error;
-    console.log('The solution is: ', results[0].solution);
-  });
 
 app.listen(3000, () => {
   console.log('listening on port 3000');
 });
-

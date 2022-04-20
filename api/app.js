@@ -16,7 +16,7 @@ app.use(express.raw({ type: 'image/*', limit: '5mb' }));
 
 let router = express.Router();
 
-app.use('/api/', router);
+app.use('/image/', router);
 
 
 
@@ -60,6 +60,30 @@ router.get('/:id', function (req, res, next) {
   });
 });
 
+router.get('/name/:name', function (req, res, next) {
+  sql.getByName(req.params.name, function (data) {
+    if (data) {
+      res.status(200).json({
+        'status': 200,
+        'statusText': 'OK',
+        'message': 'All images retrieved',
+        'data': data
+      });
+    } else {
+      res.status(404).json({
+        'status': 404,
+        'statusText': 'Not found',
+        'message': `Image: '${req.params.name}' not be found.`,
+        'error': {
+          "code": "NOT_FOUND",
+          "message": `Image: '${req.params.name}' not be found.`
+        }
+      });
+    }
+  }, function (err) {
+    next(err);
+  });
+});
 
 
 app.listen(3000, () => {

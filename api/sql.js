@@ -35,12 +35,13 @@ let sqlFuncation = {
         reject(err)
       }
       resolve(result);
+
     });
 
   },
   getByName: function (name, resolve, reject) {
 
-    connection.query(`SELECT * FROM image_HTML_URl WHERE Name_of_image=${name}`, function (err, result, fields) {
+    connection.query(`SELECT * FROM image_HTML_URl WHERE Name_of_image="${name}"`, function (err, result, fields) {
       if (err) {
         reject(err)
       }

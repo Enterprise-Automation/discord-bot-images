@@ -48,17 +48,6 @@ var connection = mysql.createConnection({
     if (error) throw error;
     console.log('The solution is: ', results[0].solution);
   });
-   
- /*
-  connection.connect(function(err) {
-    if (err) throw err;
-    connection.query("SELECT * FROM image_HTML_URl", function (err, result, fields) {
-      if (err) throw err;
-      console.log(result);
-    });
-  });
-  connection.end();
-*/
 
 app.listen(3000, () => {
   console.log('listening on port 3000');

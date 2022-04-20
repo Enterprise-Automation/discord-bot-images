@@ -7,7 +7,7 @@ CREATE TABLE image_HTML_URl (
   PRIMARY KEY (`id`)
 );
 
-INSERT INTO testdata 
+INSERT INTO image_HTML_URl 
   (HTML_URL, Name_of_image, tag) 
 VALUES
   ('test', 'name of pic', 'dog'),

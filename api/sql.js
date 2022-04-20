@@ -49,9 +49,27 @@ let sqlFuncation = {
     });
 
   },
-  insert: function (newData, resolve, reject) {
+  insert: function (imageData, resolve, reject) {
+
+    // imageData = 'Billy_puppy+PNG+Billy_puppy+dog'
+
+    const myArray = imageData.split("+");
+
+    console.log(myArray[0]); 
+
+    connection.query(`INSERT INTO image_HTML_URl 
+    (HTML_URL, Name_of_image, tag) 
+    VALUES
+      ('/uploads/${myArray[0]}.${myArray[1]}', '${myArray[2]}', '${myArray[3]}')`, function (err, result, fields) {
+      if (err) {
+        reject(err)
+      }
+      resolve(result);
+    });
+
 
   },
+
   delete: function (id, resolve, reject) {
 
   }

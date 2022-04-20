@@ -85,6 +85,31 @@ router.get('/name/:name', function (req, res, next) {
   });
 });
 
+router.get('/upload/:imageData', function (req, res, next) {
+  sql.insert(req.params.imageData, function (data) {
+    if (data) {
+      res.status(201).json({
+        'status': 201,
+        'statusText': 'Created',
+        'message': 'image path upload',
+        'data': data
+      });
+    } else {
+      res.status(400).json({
+        'status': 400,
+        'statusText': 'Bad Request',
+        'message': `Image: '${req.params.imageData}' was unable to be uploaded.`,
+        'error': {
+          "code": "Bad Request",
+          "message": `Image: '${req.params.imageData}' was unable to be uploaded.`
+        }
+      });
+    }
+  }, function (err) {
+    next(err);
+  });
+});
+
 
 app.listen(3000, () => {
   console.log('listening on port 3000');

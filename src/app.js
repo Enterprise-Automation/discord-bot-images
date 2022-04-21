@@ -1,10 +1,10 @@
 
 const express = require('express');
 const fileUpload = require('express-fileupload');
-let sql = require('./sql.js')
+
 const path = require('path');
 const app = express();
-const function_module = require('../route_functions/validate.js');
+
 const fs = require("fs");
 
 
@@ -13,7 +13,6 @@ app.use(express.text());
 app.use(fileUpload());
 app.use(express.raw({ type: 'image/*', limit: '5mb' }));
 
-let router = express.Router();
 
 
 

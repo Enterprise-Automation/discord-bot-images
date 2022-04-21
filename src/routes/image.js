@@ -15,8 +15,10 @@
  *         description: Returns JSON document with validation results
  */
 
- 
+ let sql = require('../route_functions/sql.js');
+
  module.exports = function (app) {
+     
      //get all
    app.get('/api/image/:command', (req, res, next) => {
     sql.get(function (data) {

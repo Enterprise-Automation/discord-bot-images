@@ -15,7 +15,7 @@
  *         description: Returns JSON document with validation results
  */
 
-var function_module = require('../../route_functions/validate.js')
+var function_module = require('../route_functions/validate.js')
 module.exports = function (app) {
   app.get('/api/validate/:command', (req, res, next) => {
 

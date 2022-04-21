@@ -4,10 +4,7 @@ const fileUpload = require('express-fileupload');
 let sql = require('./sql.js')
 const path = require('path');
 const app = express();
-
-//!image.random cat 
-//!image.search id
-//!image.search title
+const function_module = require('../../route_functions/validate.js');
 
 app.use(express.static('public'));
 app.use(express.text());
@@ -19,6 +16,14 @@ let router = express.Router();
 app.use('/image/', router);
 
 
+router.get('/validate/:command', function(req, res, next) {
+  var getResponse = function_module.func(req);
+  getResponse.then((response) => {
+    res.send(response);
+  }).catch(err => {
+    res.send(err);
+  });
+})
 
 router.get('/', function (req, res, next) {
   sql.get(function (data) {

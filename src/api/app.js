@@ -4,7 +4,7 @@ const fileUpload = require('express-fileupload');
 let sql = require('./sql.js')
 const path = require('path');
 const app = express();
-const function_module = require('../../route_functions/validate.js');
+const function_module = require('../route_functions/validate.js');
 
 app.use(express.static('public'));
 app.use(express.text());
@@ -12,6 +12,8 @@ app.use(fileUpload());
 app.use(express.raw({ type: 'image/*', limit: '5mb' }));
 
 let router = express.Router();
+
+
 
 app.use('/image/', router);
 
@@ -23,7 +25,9 @@ router.get('/validate/:command', function(req, res, next) {
   }).catch(err => {
     res.send(err);
   });
-})
+});
+
+
 
 router.get('/', function (req, res, next) {
   sql.get(function (data) {

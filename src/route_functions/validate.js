@@ -1,5 +1,5 @@
 const Promise = require('promise');
-const spec = require('../../spec.js');
+const spec = require('../spec.js');
 const validator = require('validator');
 
 exports.func = req => {

@@ -17,6 +17,7 @@ connection.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
 });
 
 
+
 let sqlFuncation = {
   get: function (resolve, reject) {
 
@@ -55,8 +56,6 @@ let sqlFuncation = {
 
     const myArray = imageData.split("+");
 
-    console.log(myArray[0]); 
-
     connection.query(`INSERT INTO image_HTML_URl 
     (HTML_URL, Name_of_image, tag) 
     VALUES
@@ -69,11 +68,39 @@ let sqlFuncation = {
 
 
   },
+  getRandom: function (resolve, reject) {
+
+    // let arrr = Math.floor(Math.random() * (2 - 1 + 1) + min);
+
+  
+    // SELECT COUNT(id) FROM image_HTML_URl
+    let r = connection.query(`SELECT COUNT(id) FROM image_HTML_URl`, function (err, result, fields) {
+      console.log("hello "+ result)
+      return 1;
+    });
+    console.log("hello "+ r)
+    
+    //let vc = getRandomArbitrary(1, r);
+    //console.log("here i am ---------------" + r + "---" + vc)
+
+    
+  /*    
+  connection.query(`SELECT * FROM image_HTML_URl WHERE id=${vc}`, function (err, result, fields) {
+      if (err) {
+        reject(err)
+      }
+      resolve(result);
+
+    });
+
+    */
+  },
 
   delete: function (id, resolve, reject) {
 
   }
-  
+
 }
+
 // connection end ??
 module.exports = sqlFuncation

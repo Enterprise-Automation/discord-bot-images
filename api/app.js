@@ -35,7 +35,8 @@ router.get('/', function (req, res, next) {
 });
 
 
-router.get('/:id', function (req, res, next) {
+
+router.get('/id/:id', function (req, res, next) {
   sql.getById(req.params.id, function (data) {
     if (data) {
       res.status(200).json({
@@ -110,6 +111,31 @@ router.get('/upload/:imageData', function (req, res, next) {
   });
 });
 
+router.get('/random', function (req, res, next) {
+  sql.getRandom(function (data) {
+      if (data) {
+          res.status(200).json({
+              "status": 200,
+              "statusText": "ok",
+              "message": "Random quote retrieved",
+              "data": data
+          });
+      }
+      else {
+          res.status(404).json({
+              "status": 404,
+              "statusText": "Not Found",
+              "message": "Random image not found.",
+              "error": {
+                  "code": "NOT_FOUND",
+                  "message": "Random image not found."
+              }
+          });
+      }
+  }, function (err) {
+      next(err);
+  });
+});
 
 app.listen(3000, () => {
   console.log('listening on port 3000');

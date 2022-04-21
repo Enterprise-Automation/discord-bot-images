@@ -31,7 +31,8 @@ let sqlFuncation = {
   },
   getById: function (id, resolve, reject) {
 
-    connection.query(`SELECT * FROM image_HTML_URl WHERE id=${id}`, function (err, result, fields) {
+    const query = `SELECT * FROM image_HTML_URl WHERE id=?`;
+    connection.query(``, function (err, result, fields) {
       if (err) {
         reject(err)
       }

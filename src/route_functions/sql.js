@@ -20,7 +20,7 @@ connection.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
 
 let sqlFuncation = {
   get: function (resolve, reject) {
-
+    
     connection.query(`SELECT * FROM image_HTML_URl`, function (err, result, fields) {
       if (err) {
         reject(err)
@@ -31,8 +31,9 @@ let sqlFuncation = {
   },
   getById: function (id, resolve, reject) {
 
+    const {userinput} = id;
     const query = `SELECT * FROM image_HTML_URl WHERE id=?`;
-    connection.query(``, function (err, result, fields) {
+    connection.query(query, [userinput], function (err, result, fields) {
       if (err) {
         reject(err)
       }
@@ -43,7 +44,10 @@ let sqlFuncation = {
   },
   getByName: function (name, resolve, reject) {
 
-    connection.query(`SELECT * FROM image_HTML_URl WHERE Name_of_image="${name}"`, function (err, result, fields) {
+    const {userinput} = name;
+    const query = `SELECT * FROM image_HTML_URl WHERE Name_of_image="?"`;
+
+    connection.query(query, [userinput], function (err, result, fields) {
       if (err) {
         reject(err)
       }

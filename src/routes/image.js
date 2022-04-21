@@ -20,7 +20,8 @@
  module.exports = function (app) {
      
      //get all
-   app.get('/api/image/:command', (req, res, next) => {
+     
+   app.get('/api/image/', (req, res, next) => {
     sql.get(function (data) {
         res.status(200).json({
           'status': 200,
@@ -33,6 +34,8 @@
           next(err);
         });
    });
+   
+
    //get by id 
    app.get('/api/image/id/:id', function (req, res, next) {
     sql.getById(req.params.id, function (data) {

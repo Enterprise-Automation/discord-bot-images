@@ -53,8 +53,9 @@ let sqlFuncation = {
   insert: function (imageData, resolve, reject) {
 
     // imageData = 'Billy_puppy+PNG+Billy_puppy+dog'
-
-    const myArray = imageData.split("+");
+    console.log(imageData);
+    const myArray = imageData.split(",");
+   
 
     connection.query(`INSERT INTO image_HTML_URl 
     (HTML_URL, Name_of_image, tag) 

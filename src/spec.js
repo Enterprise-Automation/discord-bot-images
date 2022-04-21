@@ -1,16 +1,16 @@
 // Bot API action constants
 module.exports = Object.freeze({
-  identifier: "microk8s",
-  actions: ["create","list","details","delete","power_on","power_off"],
+  identifier: "image",
+  actions: ["upload","list","id","name","delete","random"],
   schema: {
-    create: {
+    upload: {
       arg_count: 1,
       args: [
         {
           name: "name",
           type: "string",
-          min: 3,
-          max: 15,
+          min: 5,
+          max: 128,
           pattern: "alphanumeric"
         }
       ]
@@ -31,37 +31,37 @@ module.exports = Object.freeze({
         }
       ]
     },
-    details: {
+    id: {
       arg_count: 1,
       args: [
         {
           name: "name",
           type: "string",
-          min: 3,
-          max: 15,
+          min: 1,
+          max: 20,
           pattern: "alphanumeric"
         }
       ]
     },
-    power_on: {
+    name: {
       arg_count: 1,
       args: [
         {
           name: "name",
           type: "string",
-          min: 3,
-          max: 15,
+          min: 1,
+          max: 20,
           pattern: "alphanumeric"
         }
       ]
     },
-    power_off: {
+    random: {
       arg_count: 1,
       args: [
         {
           name: "name",
           type: "string",
-          min: 3,
+          min: 1,
           max: 15,
           pattern: "alphanumeric"
         }

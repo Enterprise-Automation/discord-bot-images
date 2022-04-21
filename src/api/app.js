@@ -6,6 +6,7 @@ const path = require('path');
 const app = express();
 const function_module = require('../route_functions/validate.js');
 
+
 app.use(express.static('public'));
 app.use(express.text());
 app.use(fileUpload());
@@ -13,11 +14,20 @@ app.use(express.raw({ type: 'image/*', limit: '5mb' }));
 
 let router = express.Router();
 
+var string = 'http://localhost:3000/image/upload/https://cdn.discordapp.com/attachments/597445991699841056/965911868197703700/IMG_2164.PNG';
+
+// Encode the String
+var encodedString = btoa(string);
+console.log(encodedString); // Outputs: "SGVsbG8gV29ybGQh"
+
+// Decode the String
+var decodedString = atob(encodedString);
+console.log(decodedString);
 
 
 app.use('/image/', router);
 
-
+// validate a command 
 router.get('/validate/:command', function(req, res, next) {
   var getResponse = function_module.func(req);
   getResponse.then((response) => {
@@ -28,7 +38,8 @@ router.get('/validate/:command', function(req, res, next) {
 });
 
 
-
+// get all links 
+/*
 router.get('/', function (req, res, next) {
   sql.get(function (data) {
     res.status(200).json({
@@ -42,9 +53,9 @@ router.get('/', function (req, res, next) {
       next(err);
     });
 });
+*/
 
-
-
+// search by id 
 router.get('/id/:id', function (req, res, next) {
   sql.getById(req.params.id, function (data) {
     if (data) {
@@ -70,6 +81,7 @@ router.get('/id/:id', function (req, res, next) {
   });
 });
 
+// search by name 
 router.get('/name/:name', function (req, res, next) {
   sql.getByName(req.params.name, function (data) {
     if (data) {
@@ -95,6 +107,8 @@ router.get('/name/:name', function (req, res, next) {
   });
 });
 
+// upload a image  
+// expected input http://localhost:3000/image/upload/https://cdn.discordapp.com/attachments/597445991699841056/965911868197703700/IMG_2164.PNG
 router.get('/upload/:imageData', function (req, res, next) {
   sql.insert(req.params.imageData, function (data) {
     if (data) {
@@ -120,7 +134,8 @@ router.get('/upload/:imageData', function (req, res, next) {
   });
 });
 
-router.get('/random', function (req, res, next) {
+// look up a random image
+router.get('/random/:tag', function (req, res, next) {
   sql.getRandom(function (data) {
       if (data) {
           res.status(200).json({

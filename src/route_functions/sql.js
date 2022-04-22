@@ -43,7 +43,7 @@ exports.func = req => {
           }
           //result
           console.log(result);
-          resolve(`"status": "success", "status_message": "sending back image", "discord_message": "` + result[0].HTML_URL + `"`);
+          resolve({"status": "success", "status_message": "sending back image", "discord_message":  + result[0].HTML_URL  });
         });
        
 
@@ -55,9 +55,11 @@ exports.func = req => {
           if (err) {
             reject(err)
           }
-          
-          console.log(result);
-          resolve(`"status": "success", "status_message": "sending back image", "discord_message": "` + result[0].HTML_URL + `"`);
+        
+
+
+          console.log(result[0].HTML_URL);
+          resolve({"status": "success", "status_message": "sending back image", "discord_message": +"test"+result[0].HTML_URL  });
 
 
         });

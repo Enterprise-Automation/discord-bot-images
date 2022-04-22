@@ -35,7 +35,7 @@ exports.func = req => {
     // Expected successful command response on /api/command/appname,command
     //{"status": "success", "status_message": "insert status message here", "discord_message": "message for discord here"}
 
-    switch (params[0]) {
+    switch (params[1]) {
       case "get":
         connection.query(`SELECT * FROM image_HTML_URl`, function (err, result, fields) {
           if (err) {
@@ -51,7 +51,7 @@ exports.func = req => {
       case "getById":
 
         query = `SELECT * FROM image_HTML_URl WHERE id=?`;
-        connection.query(query, params[1], function (err, result, fields) {
+        connection.query(query, params[2], function (err, result, fields) {
           if (err) {
             reject(err)
           }
@@ -59,7 +59,7 @@ exports.func = req => {
 
 
           console.log(result[0].HTML_URL);
-          resolve({"status": "success", "status_message": "sending back image", "discord_message": +"test"+result[0].HTML_URL  });
+          resolve({"status": "success", "status_message": "sending back image", "discord_message": result[0].HTML_URL  });
 
 
         });

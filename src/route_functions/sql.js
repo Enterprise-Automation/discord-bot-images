@@ -17,18 +17,23 @@ connection.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
 });
 
 
-
-
-
 exports.func = req => {
   return new Promise((resolve, reject) => {
 
     let params = req.params.command.split(",");
 
-
+    // test
     console.log("params 0 = " + params);
 
     let query = "";
+
+
+     
+// Expected validation response on /api/validation/appname,command
+//{"status":"success","status_message":"valid_command"}
+
+// Expected successful command response on /api/command/appname,command
+//{"status": "success", "status_message": "insert status message here", "discord_message": "message for discord here"}
 
     switch (params[0]) {
       case "get":
@@ -36,17 +41,22 @@ exports.func = req => {
           if (err) {
             reject(err)
           }
-          resolve(result);
+            //result
+            console.log(result);
+          resolve(`"status": "success", "status_message": "sending back image", "discord_message": "` + result[0].HTML_URL + `"`);
         });
         break;
       case "getById":
 
         query = `SELECT * FROM image_HTML_URl WHERE id=?`;
-        connection.query(query, params[1], function (err, result, fields) {
+        connection.query(query, params[0], function (err, result, fields) {
           if (err) {
             reject(err)
           }
           resolve(result);
+          console.log(result);
+         // resolve(`"status": "success", "status_message": "sending back image", "discord_message": "` + result.HTML_URL + `"`);
+  
 
         });
 
@@ -82,6 +92,7 @@ exports.func = req => {
       // code block
     }
 
+    connection.end();
 
   });
 }

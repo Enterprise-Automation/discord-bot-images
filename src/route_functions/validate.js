@@ -43,11 +43,7 @@ exports.func = req => {
       if(!params[i+2]){
         
         reject({ status: "error", status_message: "missing_required_parameter", discord_message: "Missing required parameter. \n" + arg_spec})
-      } else{
-        if(params[i+2].length < spec.schema[req_action].args[i].min || params[i+2].length > spec.schema[req_action].args[i].max || !validator.isAlphanumeric(params[i+2].trim())){
-          reject({ status: "error", status_message: "invalid_format_required_parameter", discord_message: "Parameter not in required format. \n" + arg_spec})
-        }
-      }
+      } 
     }
 
     resolve({ status: "success", status_message: "valid_command"})

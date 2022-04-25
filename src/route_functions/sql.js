@@ -43,9 +43,9 @@ exports.func = req => {
           }
           //result
           console.log(result);
-          resolve({"status": "success", "status_message": "sending back image", "discord_message":  + result[0].HTML_URL  });
+          resolve({ "status": "success", "status_message": "sending back image", "discord_message": + result[0].HTML_URL });
         });
-       
+
 
         break;
       case "getById":
@@ -55,15 +55,15 @@ exports.func = req => {
           if (err) {
             reject(err)
           }
-        
+
 
 
           console.log(result[0].HTML_URL);
-          resolve({"status": "success", "status_message": "sending back image", "discord_message": result[0].HTML_URL  });
+          resolve({ "status": "success", "status_message": "sending back image", "discord_message": result[0].HTML_URL });
 
 
         });
- 
+
 
         break;
       case "getByName":
@@ -73,15 +73,15 @@ exports.func = req => {
           if (err) {
             reject(err)
           }
-          
-          resolve({"status": "success", "status_message": "sending back image", "discord_message": result[0].HTML_URL  });
+
+          resolve({ "status": "success", "status_message": "sending back image", "discord_message": result[0].HTML_URL });
 
         });
 
         break;
       case "upload":
 
-        console.log("params: " + params);  
+        console.log("params: " + params);
 
         query = `INSERT INTO image_HTML_URl 
         (HTML_URL, Name_of_image, tag) 
@@ -92,48 +92,34 @@ exports.func = req => {
           if (err) {
             reject(err)
           }
-          resolve({"status": "success", "status_message": "sending back image", "discord_message" : "upload"});
+          resolve({ "status": "success", "status_message": "sending back image", "discord_message": "upload" });
         });
-  
+
         break;
       case "random":
 
-      
- 
+        query = `SELECT * FROM image_HTML_URl WHERE tag =?`
+
+        connection.query(query, params[2], function (err, result, fields) {
+          if (err) {
+            reject(err)
+          }
+
+          resolve({ "status": "success", "status_message": "sending back image", "discord_message": result[getRandomInt(0,result.length)].HTML_URL });
+
+        });
+
     }
 
-    //connection.end();  ?? where do you go??
+ 
 
 
   });
 
-
-
+  function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-/*
-
-  getRandom: function (resolve, reject) {
-
-    // let arrr = Math.floor(Math.random() * (2 - 1 + 1) + min);
-
-  
-    // SELECT COUNT(id) FROM image_HTML_URl
-    let r = connection.query(`SELECT COUNT(id) FROM image_HTML_URl`, function (err, result, fields) {
-      console.log("hello "+ result)
-      return 1;
-    });
-    console.log("hello "+ r)
-    
-    //let vc = getRandomArbitrary(1, r);
-    //console.log("here i am ---------------" + r + "---" + vc)
-
-    
-  /*    
-
-  delete: function (id, resolve, reject) {
-
-  }
-
 }
-*/

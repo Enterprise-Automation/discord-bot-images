@@ -81,23 +81,25 @@ exports.func = req => {
         break;
       case "upload":
 
-      
+        console.log("params: " + params);  
+
         query = `INSERT INTO image_HTML_URl 
         (HTML_URL, Name_of_image, tag) 
         VALUES
           (?, ?, ?)`;
 
-        connection.query(query, [params[1], params[2], params[3]], function (err, result, fields) {
+        connection.query(query, [params[2], params[3], params[4]], function (err, result, fields) {
           if (err) {
             reject(err)
           }
           resolve({"status": "success", "status_message": "sending back image", "discord_message" : "upload"});
         });
-        //{"status": "success", "status_message": "sending back image", "discord_message": result[0].HTML_URL  }
-       // https://cdn.discordapp.com/attachments/597445991699841056/798257099842650202/unknown.png dogos dog
+  
         break;
-      default:
-      // code block
+      case "random":
+
+      
+ 
     }
 
     //connection.end();  ?? where do you go??

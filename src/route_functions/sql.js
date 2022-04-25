@@ -21,19 +21,10 @@ exports.func = req => {
   return new Promise((resolve, reject) => {
 
     let params = req.params.command.split(",");
-
+    let query = "";
     // test
     console.log("params 0 = " + params);
 
-    let query = "";
-
-
-
-    // Expected validation response on /api/validation/appname,command
-    //{"status":"success","status_message":"valid_command"}
-
-    // Expected successful command response on /api/command/appname,command
-    //{"status": "success", "status_message": "insert status message here", "discord_message": "message for discord here"}
 
     switch (params[1]) {
       case "get":
@@ -94,6 +85,11 @@ exports.func = req => {
           }
           resolve({ "status": "success", "status_message": "sending back image", "discord_message": "upload" });
         });
+        break;
+      case "tags":
+
+
+
 
         break;
       case "random":
@@ -101,17 +97,15 @@ exports.func = req => {
         query = `SELECT * FROM image_HTML_URl WHERE tag =?`
 
         connection.query(query, params[2], function (err, result, fields) {
-          if (err) {
-            reject(err)
-          }
+          if (err) {reject(err)}
 
-          resolve({ "status": "success", "status_message": "sending back image", "discord_message": result[getRandomInt(0,result.length)].HTML_URL });
-
+          resolve({ "status": "success", "status_message": "sending back image", "discord_message": result[getRandomInt(0, result.length)].HTML_URL });
         });
+
 
     }
 
- 
+
 
 
   });
@@ -120,6 +114,6 @@ exports.func = req => {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+  }
 
 }

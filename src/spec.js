@@ -1,7 +1,7 @@
 // Bot API action constants
 module.exports = Object.freeze({
   identifier: "image",
-  actions: ["upload","search","random","tags"],
+  actions: ["upload","search","random","tags","delete"],
   schema: {
     upload: {
       arg_count: 3,
@@ -10,7 +10,7 @@ module.exports = Object.freeze({
           name: "URL",
           type: "string",
           min: 5,
-          max: 128
+          max: 300
         }
       ],
       args: [
@@ -65,6 +65,18 @@ module.exports = Object.freeze({
           type: "string",
           min: 0,
           max: 7,
+          pattern: "alphanumeric"
+        }
+      ]
+    },
+    delete: {
+      arg_count: 1,
+      args: [
+        {
+          name: "id",
+          type: "string",
+          min: 1,
+          max: 6,
           pattern: "alphanumeric"
         }
       ]

@@ -11,11 +11,6 @@ var connection = mysql.createConnection({
 
 connection.connect();
 
-connection.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
-  if (error) throw error;
-  console.log('The solution is: ', results[0].solution);
-});
-
 
 exports.func = req => {
   return new Promise((resolve, reject) => {
@@ -107,7 +102,7 @@ exports.func = req => {
 
         connection.query(query, params[2], function (err, result, fields) {
           if (err) {
-            reject({ "status": "failed", "status_message": "can't resolve query", "discord_message": "failed to find images with the tag of " + params[2] + "\ntry the command !image tags"});
+            reject({ "status": "failed", "status_message": "can't resolve query", "discord_message": "failed to find images with the tag of " + params[2] + "\ntry the command !image tags" });
           }
 
           let randomNumber = getRandomInt(0, result.length - 1);
@@ -121,11 +116,25 @@ exports.func = req => {
 
         });
 
+        break;
+      case "delete":
+
+        if (req.get("user") != "EAS-Clark") {
+          resolve({ "status": "Fail", "status_message": "Not Authorised", "discord_message": "Not authorised to delete images" });
+
+        } else {
+          query = `DELETE FROM image_HTML_URl WHERE id=?`
+
+          connection.query(query, params[2], function (err, result, fields) {
+            if (err) {
+              console.log(err)
+              reject(err)
+            }
+            resolve({ "status": "success", "status_message": "Image deleted", "discord_message": "Succesfully deleted image" });
+          });
+        }
 
     }
-
-
-
 
   });
 
@@ -147,4 +156,3 @@ exports.func = req => {
   }
 
 }
- 

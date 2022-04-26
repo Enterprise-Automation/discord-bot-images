@@ -82,17 +82,23 @@ exports.func = req => {
         (HTML_URL, Name_of_image, tag) 
         VALUES
           (?, ?, ?)`;
-  
-          connection.query(query, [params[2], params[3], params[4]], function (err, result, fields) {
-            if (err) {
-              reject({ "status": "failed", "status_message": "can't resolve query", "discord_message": "Failed to upload image (Url could be to big)" })
-            }
-            resolve({ "status": "success", "status_message": "sending back image", "discord_message": "Upload image. id: " + result.insertId + " Name: " + params[3]});
-          });
+
+        connection.query(query, [params[2], params[3], params[4]], function (err, result, fields) {
+          if (err) {
+            reject({ "status": "failed", "status_message": "can't resolve query", "discord_message": "Failed to upload image (Url could be to big)" })
+          }
+          resolve({ "status": "success", "status_message": "sending back image", "discord_message": "Upload image. id: " + result.insertId + " Name: " + params[3] });
+        });
 
         break;
       case "tags":
 
+        query = `SELECT tag, count(*) FROM image_HTML_URl GROUP BY tag`
+
+        connection.query(query, params[2], function (err, result, fields) {
+
+          reject({ "status": "failed", "status_message": "can't resolve query", "discord_message": "Lit of tags: \n" + arrayToString(result) });
+        });
 
         break;
       case "random":
@@ -101,7 +107,7 @@ exports.func = req => {
 
         connection.query(query, params[2], function (err, result, fields) {
           if (err) {
-            reject({ "status": "failed", "status_message": "can't resolve query", "discord_message": "failed to find images with the tag of " + params[2] });
+            reject({ "status": "failed", "status_message": "can't resolve query", "discord_message": "failed to find images with the tag of " + params[2] + "\ntry the command !image tags"});
           }
 
           let randomNumber = getRandomInt(0, result.length - 1);
@@ -123,6 +129,17 @@ exports.func = req => {
 
   });
 
+  function arrayToString(array) {
+
+    let stringArry = "Tag: name - number of tag\n---------------------------\n";
+
+    for (let i = 0; i <= array.length - 1; i++) {
+      stringArry = stringArry + "Tag: " + array[i]["tag"] + " - " + array[i]["count(*)"] + "\n"
+    }
+
+    return stringArry;
+  }
+
   function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -130,3 +147,4 @@ exports.func = req => {
   }
 
 }
+ 

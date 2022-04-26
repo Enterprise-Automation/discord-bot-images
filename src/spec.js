@@ -54,16 +54,8 @@ module.exports = Object.freeze({
       ]
     },
     tags: {
-      arg_count: 1,
-      args: [
-        {
-          name: "tag",
-          type: "string",
-          min: 0,
-          max: 7,
-          pattern: "alphanumeric"
-        }
-      ]
+      arg_count: 0,
+      args:[]
     },
     random: {
       arg_count: 1,

@@ -38,35 +38,42 @@ exports.func = req => {
 
 
         break;
-      case "getById":
+      case "search":
 
-        query = `SELECT * FROM image_HTML_URl WHERE id=?`;
-        connection.query(query, params[2], function (err, result, fields) {
-          if (err) {
-            reject(err)
-          }
+        if (params[2].toLowerCase() === "id") {
+          query = `SELECT * FROM image_HTML_URl WHERE id=?`;
+          connection.query(query, params[3], function (err, result, fields) {
+            if (err) {
+              reject(err)
+            }
+            try {
+              resolve({ "status": "success", "status_message": "sending back image", "discord_message": result[0].HTML_URL });
+            } catch (error) {
+              reject({ "status": "failed", "status_message": "can't resolve query", "discord_message": "Can't find a image with the name of " + params[3] });
+            }
+
+          });
+
+        } else if (params[2].toLowerCase() === "name") {
+
+          query = `SELECT * FROM image_HTML_URl WHERE Name_of_image=?`;
+          connection.query(query, params[3], function (err, result, fields) {
+            if (err) {
+              reject(err)
+            }
+            try {
+              resolve({ "status": "success", "status_message": "sending back image", "discord_message": result[0].HTML_URL });
+            } catch (error) {
+              reject({ "status": "failed", "status_message": "can't resolve query", "discord_message": "Can't find a image with the name of " + params[3] });
+            }
 
 
+          });
+        } else {
+          reject({ "status": "failed", "status_message": "can't resolve query", "discord_message": "You only search by name or id" });
 
-          console.log(result[0].HTML_URL);
-          resolve({ "status": "success", "status_message": "sending back image", "discord_message": result[0].HTML_URL });
+        }
 
-
-        });
-
-
-        break;
-      case "getByName":
-
-        query = `SELECT * FROM image_HTML_URl WHERE Name_of_image=?`;
-        connection.query(query, params[2], function (err, result, fields) {
-          if (err) {
-            reject(err)
-          }
-
-          resolve({ "status": "success", "status_message": "sending back image", "discord_message": result[0].HTML_URL });
-
-        });
 
         break;
       case "upload":
@@ -84,6 +91,7 @@ exports.func = req => {
           }
           resolve({ "status": "success", "status_message": "sending back image", "discord_message": "upload" });
         });
+
         break;
       case "tags":
 

@@ -86,17 +86,45 @@ exports.func = req => {
         break;
       case "upload":
 
-        query = `INSERT INTO image_HTML_URl 
-        (HTML_URL, Name_of_image, tag) 
-        VALUES
-          (?, ?, ?)`;
+        query = `SELECT * FROM image_HTML_URl WHERE HTML_URL=?`;
 
-        connection.query(query, [params[2], params[3], params[4]], function (err, result, fields) {
+        connection.query(query, params[2], function (err, result, fields) {
           if (err) {
-            reject({ "status": "failed", "status_message": "can't resolve query", "discord_message": "Failed to upload image (Url could be to big)" })
+            reject(err)
           }
-          resolve({ "status": "success", "status_message": "sending back image", "discord_message": "Upload image. id: " + result.insertId + " Name: " + params[3] });
+          try {
+            resolve({ "status": "failed", "status_message": "sending back image", "discord_message": "image already in saved" + "\nimage is saved as;\nid: " + result[0].id + " name: " + result[0].Name_of_image });
+          } catch (error) {
+
+            query = `SELECT * FROM image_HTML_URl WHERE Name_of_image=?`;
+
+            connection.query(query, params[3], function (err, result, fields) {
+              if (err) {
+                reject(err)
+              }
+              try {
+                resolve({ "status": "failed", "status_message": "sending back image", "discord_message": "image already in saved urnder that name" + "\nimage is saved as;\nid: " + result[0].id + " name: " + result[0].Name_of_image });
+              } catch (error) {
+
+                query = `INSERT INTO image_HTML_URl 
+                (HTML_URL, Name_of_image, tag) 
+                VALUES
+                  (?, ?, ?)`;
+  
+              connection.query(query, [params[2], params[3], params[4]], function (err, result, fields) {
+                if (err) {
+                  reject({ "status": "failed", "status_message": "can't resolve query", "discord_message": "Failed to upload image (Url could be to big)" })
+                }
+                resolve({ "status": "success", "status_message": "sending back image", "discord_message": "Upload image. id: " + result.insertId + " Name: " + params[3] });
+              });
+              }});
+            
+
+
+          }
         });
+
+
 
         break;
       case "tags":
@@ -158,7 +186,7 @@ exports.func = req => {
             WHERE id=?`
 
           connection.query(query, [params[3], params[4], params[2]], function (err, result, fields) {
-    
+
             if (err) {
 
               resolve({ "status": "Fail", "status_message": "Edit Fail", "discord_message": "Edit images data" });

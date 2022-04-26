@@ -132,13 +132,8 @@ exports.func = req => {
                 });
               }
             });
-
-
-
           }
         });
-
-
 
         break;
       case "tags":

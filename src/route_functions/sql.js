@@ -23,11 +23,10 @@ exports.func = req => {
     let params = req.params.command.split(",");
     let query = "";
     // test
-    console.log("params 0 = " + params);
-
 
     switch (params[1]) {
       case "get":
+
         connection.query(`SELECT * FROM image_HTML_URl`, function (err, result, fields) {
           if (err) {
             reject(err)
@@ -89,17 +88,26 @@ exports.func = req => {
       case "tags":
 
 
-
-
         break;
       case "random":
 
-        query = `SELECT * FROM image_HTML_URl WHERE tag =?`
+        query = `SELECT * FROM image_HTML_URl WHERE tag=?`
+
 
         connection.query(query, params[2], function (err, result, fields) {
-          if (err) {reject(err)}
+          if (err) {
+            reject({ "status": "failed", "status_message": "can't resolve query", "discord_message": "failed to find images with the tag of " + params[2] });
+          }
 
-          resolve({ "status": "success", "status_message": "sending back image", "discord_message": result[getRandomInt(0, result.length)].HTML_URL });
+          let randomNumber = getRandomInt(0, result.length - 1);
+
+          try {
+            resolve({ "status": "success", "status_message": "sending back image", "discord_message": result[randomNumber].HTML_URL });
+          } catch (error) {
+            reject({ "status": "failed", "status_message": "can't resolve query", "discord_message": "failed to find images with the tag of " + params[2] });
+          }
+
+
         });
 
 

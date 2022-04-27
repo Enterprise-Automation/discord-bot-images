@@ -23,8 +23,7 @@ exports.func = req => {
   return new Promise((resolve, reject) => {
 
     let params = req.params.command.split(",");
-    console.log(params)
-    // test
+ 
 
     switch (params[1]) {
       case "get":

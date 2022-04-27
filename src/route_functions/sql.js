@@ -23,7 +23,7 @@ exports.func = req => {
   return new Promise((resolve, reject) => {
 
     let params = req.params.command.split(",");
-
+    console.log(params)
     // test
 
     switch (params[1]) {
@@ -35,12 +35,12 @@ exports.func = req => {
       case "search":
 
         search(connection, params, resolve, reject);
-
+ 
         break;
       case "upload":
 
         upload(connection, params, resolve, reject);
-
+ 
         break;
       case "tags":
 
@@ -53,7 +53,7 @@ exports.func = req => {
 
         break;
       case "delete":
-
+ 
         deletefun(connection, params, resolve, reject);
         break;
       case "edit":
@@ -64,21 +64,8 @@ exports.func = req => {
 
   });
 
-  function arrayToString(array) {
 
-    let stringArry = "Tag: name - number of tag\n---------------------------\n";
 
-    for (let i = 0; i <= array.length - 1; i++) {
-      stringArry = stringArry + "Tag: " + array[i]["tag"] + " - " + array[i]["count(*)"] + "\n"
-    }
 
-    return stringArry;
-  }
-
-  function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
 
 }

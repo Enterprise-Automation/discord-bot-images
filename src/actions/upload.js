@@ -27,7 +27,7 @@ module.exports = function (connection, params, resolve, reject) {
         } catch (error) {
 
             query = `SELECT * FROM image_HTML_URl WHERE Name_of_image=?`;
-
+ 
             connection.query(query, params[3], function (err, result, fields) {
                 if (err) {
                     reject(err)
@@ -40,7 +40,7 @@ module.exports = function (connection, params, resolve, reject) {
                   (HTML_URL, Name_of_image, tag) 
                   VALUES
                     (?, ?, ?)`;
-
+ 
                     connection.query(query, [params[2], params[3], params[4]], function (err, result, fields) {
                         if (err) {
                             reject({ "status": "failed", "status_message": "can't resolve query", "discord_message": "Failed to upload image (Url could be to big)" })

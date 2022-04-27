@@ -2,8 +2,8 @@
 let query = "";
 module.exports = function (connection, params, resolve, reject) {
 
-
-    if (req.get("user") != "EAS-Clark") {
+//|| req.get("user") != "EAS-rhysmorgan1986"
+    if (req.get("user") != "EAS-Clark" ) {
         resolve({ "status": "Fail", "status_message": "Not Authorised", "discord_message": "Not authorised to delete images" });
 
     } else {

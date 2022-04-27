@@ -1,19 +1,13 @@
 
 
-module.exports = function (connection, params) {
+module.exports = function (connection, params, resolve, reject) {
 
-    return new Promise((resolve, reject) => {
+    query = `SELECT tag, count(*) FROM image_HTML_URl GROUP BY tag`
 
-        query = `SELECT tag, count(*) FROM image_HTML_URl GROUP BY tag`
+    connection.query(query, params[2], function (err, result, fields) {
 
-        connection.query(query, params[2], function (err, result, fields) {
-
-            reject({ "status": "failed", "status_message": "can't resolve query", "discord_message": "Lit of tags: \n" + arrayToString(result) });
-        });
-
-
-
-
+        reject({ "status": "failed", "status_message": "can't resolve query", "discord_message": "Lit of tags: \n" + arrayToString(result) });
     });
+
 
 }

@@ -1,6 +1,12 @@
 const Promise = require('promise');
 const mysql = require('mysql');
-
+const upload = require('../actions/upload.js');
+const get = require('../actions/get.js');
+const search = require('../actions/search.js');
+const tags = require('../actions/tags.js');
+const random = require('../actions/random.js');
+const deletefun = require('../actions/delete.js');
+const edit = require('../actions/upload.js');
 
 var connection = mysql.createConnection({
   host: 'localhost',
@@ -11,6 +17,7 @@ var connection = mysql.createConnection({
 
 connection.connect();
 
+// http://vcenter.easlab.co.uk
 
 exports.func = req => {
   return new Promise((resolve, reject) => {
@@ -22,208 +29,36 @@ exports.func = req => {
     switch (params[1]) {
       case "get":
 
-        connection.query(`SELECT * FROM image_HTML_URl`, function (err, result, fields) {
-          if (err) {
-            reject(err)
-          }
-          //result
-          console.log(result);
-          resolve({ "status": "success", "status_message": "sending back image", "discord_message": + result[0].HTML_URL });
-        });
-
+        get(connection, params, resolve, reject);
 
         break;
       case "search":
 
-        if (params[2].toLowerCase() === "id") {
-          query = `SELECT * FROM image_HTML_URl WHERE id=?`;
-          connection.query(query, params[3], function (err, result, fields) {
-            if (err) {
-              reject(err)
-            }
-            try {
-              resolve({ "status": "success", "status_message": "sending back image", "discord_message": result[0].HTML_URL });
-            } catch (error) {
-              reject({ "status": "failed", "status_message": "can't resolve query", "discord_message": "Can't find a image with the id of " + params[3] });
-            }
-
-          });
-
-        } else if (params[2].toLowerCase() === "name") {
-
-          query = `SELECT * FROM image_HTML_URl WHERE Name_of_image=?`;
-          connection.query(query, params[3], function (err, result, fields) {
-            if (err) {
-              reject(err)
-            }
-            try {
-              resolve({ "status": "success", "status_message": "sending back image", "discord_message": result[0].HTML_URL });
-            } catch (error) {
-              reject({ "status": "failed", "status_message": "can't resolve query", "discord_message": "Can't find a image with the name of " + params[3] });
-            }
-          });
-
-        } else if (params[2].toLowerCase() === "url") {
-
-          query = `SELECT * FROM image_HTML_URl WHERE HTML_URL=?`;
-          connection.query(query, params[3], function (err, result, fields) {
-            if (err) {
-              reject(err)
-            }
-            try {
-              resolve({ "status": "success", "status_message": "sending back image", "discord_message": "image is saved as;\nid: " + result[0].id + " name: " + result[0].Name_of_image });
-            } catch (error) {
-              reject({ "status": "failed", "status_message": "can't resolve query", "discord_message": "Can't find a image with that url" });
-            }
-          });
-
-        } else {
-          reject({ "status": "failed", "status_message": "can't resolve query", "discord_message": "invaled commmand:\nsearch name image_name\nsearch url image_url\nsearch id image_id" });
-
-        }
-
+        search(connection, params, resolve, reject);
 
         break;
       case "upload":
 
-        if (params[2] == null) {
-          reject({ "status": "failed", "status_message": "sending back image", "discord_message": "missing params url" });
-          break;
-        }
-        if (params[3] == null) {
-          reject({ "status": "failed", "status_message": "sending back image", "discord_message": "missing params name" });
-          break;
-        }
-        if (params[4] == null) {
-          reject({ "status": "failed", "status_message": "sending back image", "discord_message": "missing params tag" });
-          break;
-        }
-
-        query = `SELECT * FROM image_HTML_URl WHERE HTML_URL=?`;
-
-        connection.query(query, params[2], function (err, result, fields) {
-          if (err) {
-            reject(err)
-          }
-          try {
-            reject({ "status": "failed", "status_message": "sending back image", "discord_message": "image already in saved" + "\nimage is saved as;\nid: " + result[0].id + " name: " + result[0].Name_of_image });
-          } catch (error) {
-
-            query = `SELECT * FROM image_HTML_URl WHERE Name_of_image=?`;
-
-            connection.query(query, params[3], function (err, result, fields) {
-              if (err) {
-                reject(err)
-              }
-              try {
-                reject({ "status": "failed", "status_message": "sending back image", "discord_message": "image already in saved urnder that name" + "\nimage is saved as;\nid: " + result[0].id + " name: " + result[0].Name_of_image });
-              } catch (error) {
-
-                query = `INSERT INTO image_HTML_URl 
-                (HTML_URL, Name_of_image, tag) 
-                VALUES
-                  (?, ?, ?)`;
-
-                connection.query(query, [params[2], params[3], params[4]], function (err, result, fields) {
-                  if (err) {
-                    reject({ "status": "failed", "status_message": "can't resolve query", "discord_message": "Failed to upload image (Url could be to big)" })
-                  }
-                  resolve({ "status": "success", "status_message": "sending back image", "discord_message": "Upload image. id: " + result.insertId + " Name: " + params[3] });
-                });
-              }
-            });
-          }
-        });
+        upload(connection, params, resolve, reject);
 
         break;
       case "tags":
 
-        query = `SELECT tag, count(*) FROM image_HTML_URl GROUP BY tag`
-
-        connection.query(query, params[2], function (err, result, fields) {
-
-          reject({ "status": "failed", "status_message": "can't resolve query", "discord_message": "Lit of tags: \n" + arrayToString(result) });
-        });
+        tags(connection, params, resolve, reject);
 
         break;
       case "random":
 
-        if (params[2] == '*') {
-          query = `SELECT * FROM image_HTML_URl`
-
-          connection.query(query, params[2], function (err, result, fields) {
-            if (err) {
-              console.log("result 1 " + result);
-              reject({ "status": "failed", "status_message": "can't resolve query", "discord_message": "failed to find images with the tag of " + params[2] + "\ntry the command !image tags\nor you can try !image random *" });
-            }
-
-            try {
-              let randomNumber = getRandomInt(0, result.length - 1);
-              resolve({ "status": "success", "status_message": "sending back image", "discord_message": result[randomNumber].HTML_URL });
-            } catch (error) {
-              reject({ "status": "failed", "status_message": "can't resolve query", "discord_message": "failed to find images with tags" });
-            }
-
-
-          });
-
-        }
-        query = `SELECT * FROM image_HTML_URl WHERE tag=?`
-
-        connection.query(query, params[2], function (err, result, fields) {
-          if (err) {
-            reject({ "status": "failed", "status_message": "can't resolve query", "discord_message": "failed to find images with the tag of " + params[2] + "\ntry the command !image tags\nor you can try !image random *" });
-          }
-
-          try {
-            let randomNumber = getRandomInt(0, result.length - 1);
-            resolve({ "status": "success", "status_message": "sending back image", "discord_message": result[randomNumber].HTML_URL });
-          } catch (error) {
-            reject({ "status": "failed", "status_message": "can't resolve query", "discord_message": "failed to find images with the tag of " + params[2] });
-          }
-
-
-        });
+        random(connection, params, resolve, reject);
 
         break;
       case "delete":
 
-        if (req.get("user") != "EAS-Clark") {
-          resolve({ "status": "Fail", "status_message": "Not Authorised", "discord_message": "Not authorised to delete images" });
-
-        } else {
-          query = `DELETE FROM image_HTML_URl WHERE id=?`
-
-          connection.query(query, params[2], function (err, result, fields) {
-            if (err) {
-              console.log(err)
-              resolve({ "status": "Fail", "status_message": "Edit deleted", "discord_message": "Fail to delete images" });
-            }
-            resolve({ "status": "success", "status_message": "Image deleted", "discord_message": "Succesfully deleted image" });
-          });
-        }
+        deletefun(connection, params, resolve, reject);
         break;
       case "edit":
 
-        if (req.get("user") != "EAS-Clark") {
-          resolve({ "status": "Fail", "status_message": "Not Authorised", "discord_message": "Not authorised to edit images" });
-
-        } else {
-          query = `UPDATE image_HTML_URl
-            SET Name_of_image=?, tag=?
-            WHERE id=?`
-
-          connection.query(query, [params[3], params[4], params[2]], function (err, result, fields) {
-
-            if (err) {
-
-              resolve({ "status": "Fail", "status_message": "Edit Fail", "discord_message": "Edit images data" });
-            } else {
-              resolve({ "status": "success", "status_message": "Image Edited", "discord_message": "Succesfully edited image data" });
-            }
-
-          });
-        }
+        edit(connection, params, resolve, reject);
 
     }
 

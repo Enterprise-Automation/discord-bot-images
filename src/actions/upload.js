@@ -1,20 +1,19 @@
 
 
-module.exports = function (connection, params) {
+module.exports = function (connection, params, resolve, reject) {
 
-    return new Promise((resolve, reject) => {
 
         if (params[2] == null) {
             reject({ "status": "failed", "status_message": "sending back image", "discord_message": "missing params url" });
-            break;
+            
         }
         if (params[3] == null) {
             reject({ "status": "failed", "status_message": "sending back image", "discord_message": "missing params name" });
-            break;
+            
         }
         if (params[4] == null) {
             reject({ "status": "failed", "status_message": "sending back image", "discord_message": "missing params tag" });
-            break;
+            
         }
 
         query = `SELECT * FROM image_HTML_URl WHERE HTML_URL=?`;
@@ -52,13 +51,5 @@ module.exports = function (connection, params) {
                 });
             }
         });
-
-
-
-
-
-
-
-    });
 
 }

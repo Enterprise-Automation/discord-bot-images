@@ -3,7 +3,7 @@ const Promise = require('promise');
 const mysql = require('mysql');
 
 
-module.exports = function (connection) {
+module.exports = function (connection, params) {
 
     return new Promise((resolve, reject) => {
         console.log("hello");
@@ -15,6 +15,6 @@ module.exports = function (connection) {
             console.log(result);
             resolve({ "status": "success", "status_message": "sending back image", "discord_message": + result[0].HTML_URL });
         });
-    })
+    });
 
 }

@@ -86,15 +86,15 @@ exports.func = req => {
         break;
       case "upload":
 
-        if (params[2] == null){
+        if (params[2] == null) {
           reject({ "status": "failed", "status_message": "sending back image", "discord_message": "missing params url" });
           break;
         }
-        if (params[3] == null){
+        if (params[3] == null) {
           reject({ "status": "failed", "status_message": "sending back image", "discord_message": "missing params name" });
           break;
         }
-        if (params[4] == null){
+        if (params[4] == null) {
           reject({ "status": "failed", "status_message": "sending back image", "discord_message": "missing params tag" });
           break;
         }
@@ -148,25 +148,25 @@ exports.func = req => {
         break;
       case "random":
 
-        if (params[2] == '*'){
+        if (params[2] == '*') {
           query = `SELECT * FROM image_HTML_URl`
 
           connection.query(query, params[2], function (err, result, fields) {
             if (err) {
-              console.log("result 1 "+result);
+              console.log("result 1 " + result);
               reject({ "status": "failed", "status_message": "can't resolve query", "discord_message": "failed to find images with the tag of " + params[2] + "\ntry the command !image tags\nor you can try !image random *" });
             }
-  
+
             try {
               let randomNumber = getRandomInt(0, result.length - 1);
               resolve({ "status": "success", "status_message": "sending back image", "discord_message": result[randomNumber].HTML_URL });
             } catch (error) {
-              reject({ "status": "failed", "status_message": "can't resolve query", "discord_message": "failed to find images with tags"});
+              reject({ "status": "failed", "status_message": "can't resolve query", "discord_message": "failed to find images with tags" });
             }
-  
-  
+
+
           });
-          
+
         }
         query = `SELECT * FROM image_HTML_URl WHERE tag=?`
 
@@ -228,7 +228,7 @@ exports.func = req => {
     }
 
   });
- 
+
   function arrayToString(array) {
 
     let stringArry = "Tag: name - number of tag\n---------------------------\n";

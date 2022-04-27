@@ -1,10 +1,7 @@
 
-const Promise = require('promise');
-const mysql = require('mysql');
-
-
+let query = "";
 module.exports = function (connection, params, resolve, reject) {
-    
+
     console.log("hello");
 
     connection.query(`SELECT * FROM image_HTML_URl`, function (err, result, fields) {

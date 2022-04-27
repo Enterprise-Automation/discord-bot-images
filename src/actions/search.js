@@ -1,5 +1,5 @@
 
-
+let query = "";
 module.exports = function (connection, params, resolve, reject) {
 
     if (params[2].toLowerCase() === "id") {

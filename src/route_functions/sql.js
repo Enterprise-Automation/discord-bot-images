@@ -23,7 +23,7 @@ exports.func = req => {
   return new Promise((resolve, reject) => {
 
     let params = req.params.command.split(",");
-    let query = "";
+
     // test
 
     switch (params[1]) {

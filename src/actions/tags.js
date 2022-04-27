@@ -1,5 +1,5 @@
 
-
+let query = "";
 module.exports = function (connection, params, resolve, reject) {
 
     query = `SELECT tag, count(*) FROM image_HTML_URl GROUP BY tag`

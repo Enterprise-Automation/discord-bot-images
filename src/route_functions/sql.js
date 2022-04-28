@@ -8,7 +8,7 @@ const random = require('../actions/random.js');
 const deletefun = require('../actions/delete.js');
 const edit = require('../actions/upload.js');
 const stats = require('../actions/stats.js');
-const actions = require('../actions/actions.js');
+const action = require('../actions/action.js');
 
 
 var connection = mysql.createConnection({
@@ -69,7 +69,11 @@ exports.func = req => {
         break;
       case "actions":
 
-        actions(connection, params, resolve, reject);
+        action(connection, params, resolve, reject);
+
+
+  
+
     }
 
   });

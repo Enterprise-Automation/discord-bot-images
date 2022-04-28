@@ -1,4 +1,5 @@
 const process = require('process');
+const os = require('os');
 
 let query = "";
 module.exports = function (connection, params, resolve, reject) {
@@ -7,7 +8,7 @@ module.exports = function (connection, params, resolve, reject) {
     const memoryUsage = process.memoryUsage().heapUsed / 1024 / 1024;
     let memoryUsageRound = Math.round(memoryUsage * 100) / 100;
 
-    console.log(memoryUsageRound);
+   // console.log(memoryUsageRound);
 
 
     var usage = process.cpuUsage();
@@ -26,28 +27,35 @@ module.exports = function (connection, params, resolve, reject) {
         This will return cpus, memory, free memory, disk, free disk and uptime in a nice format
     */
 
-    const formatMemoryUsage = (data) => `${Math.round(data / 1024 / 1024 * 100) / 100} MB`
+      const formatMemoryUsage = (data) => `${Math.round(data / 1024 / 1024 * 100) / 100} MB`
+
+
+
+ 
 
     const memoryData = process.memoryUsage()
 
-    const dfmemoryUsage = {
-        rss: `${formatMemoryUsage(memoryData.rss)} Total memory allocated for the process execution`,
-        heapTotal: `${formatMemoryUsage(memoryData.heapTotal)}  Total size of the allocated heap`,
-        heapUsed: `${formatMemoryUsage(memoryData.heapUsed)} Actual memory used during the execution`,
-        cpu: `${usage.user}Mhz cpu used during the execution`,
-    }
+    let dfmemoryUsage = 
+        
+    
 
-    console.log(dfmemoryUsage)
+  //  console.log(dfmemoryUsage)
 
 
 
 
-  //  console.log(process.resourceUsage());
+    //  console.log(process.resourceUsage());
 
 
 
 
 
-    resolve({ "status": "success", "status_message": "sending back image", "discord_message": "" + dfmemoryUsage.rss + "\n" + dfmemoryUsage.heapTotal + "\n" + dfmemoryUsage.heapUsed + "\n" + dfmemoryUsage.cpu + "\n"});
+    resolve({ "status": "success", "status_message": "sending back image", "discord_message": `rss: ${formatMemoryUsage(memoryData.rss)} Total memory allocated for the process execution
+    heapTotal: ${formatMemoryUsage(memoryData.heapTotal)}  Total size of the allocated heap
+    heapUsed: ${formatMemoryUsage(memoryData.heapUsed)} Actual memory used during the execution
+    cpu: ${usage.user} Mhz cpu used during the execution
+    CPUS:" ${os.cpus().length}
+    totalmem: ${formatMemoryUsage(os.totalmem())}
+    cfreemem: ${formatMemoryUsage(os.freemem())}` });
 
 }

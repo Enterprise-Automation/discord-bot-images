@@ -57,6 +57,7 @@ exports.func = req => {
       case "delete":
 
         deletefun(connection, params, resolve, reject);
+        
         break;
       case "edit":
 
@@ -66,20 +67,14 @@ exports.func = req => {
       case "stats":
 
         stats(connection, params, resolve, reject);
+
         break;
       case "actions":
 
         action(connection, params, resolve, reject);
 
-
-  
-
     }
 
   });
-
-
-
-
 
 }

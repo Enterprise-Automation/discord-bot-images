@@ -6,9 +6,6 @@ let query = "";
 module.exports = function (connection, params, resolve, reject) {
 
 
-    const memoryUsage = process.memoryUsage().heapUsed / 1024 / 1024;
-
-
     var usage = process.cpuUsage();
 
     usage = process.cpuUsage(usage);

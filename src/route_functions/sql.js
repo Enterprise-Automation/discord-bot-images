@@ -7,6 +7,9 @@ const tags = require('../actions/tags.js');
 const random = require('../actions/random.js');
 const deletefun = require('../actions/delete.js');
 const edit = require('../actions/upload.js');
+const stats = require('../actions/stats.js');
+const actions = require('../actions/actions.js');
+
 
 var connection = mysql.createConnection({
   host: 'localhost',
@@ -23,7 +26,7 @@ exports.func = req => {
   return new Promise((resolve, reject) => {
 
     let params = req.params.command.split(",");
- 
+
 
     switch (params[1]) {
       case "get":
@@ -34,12 +37,12 @@ exports.func = req => {
       case "search":
 
         search(connection, params, resolve, reject);
- 
+
         break;
       case "upload":
 
         upload(connection, params, resolve, reject);
- 
+
         break;
       case "tags":
 
@@ -52,13 +55,21 @@ exports.func = req => {
 
         break;
       case "delete":
- 
+
         deletefun(connection, params, resolve, reject);
         break;
       case "edit":
 
         edit(connection, params, resolve, reject);
 
+        break;
+      case "stats":
+
+        stats(connection, params, resolve, reject);
+        break;
+      case "actions":
+
+        actions(connection, params, resolve, reject);
     }
 
   });

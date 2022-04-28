@@ -1,7 +1,7 @@
 // Bot API action constants
 module.exports = Object.freeze({
   identifier: "image",
-  actions: ["upload","search","random","tags","delete","edit"],
+  actions: ["upload","search","random","tags","delete","edit","stats", "actions"],
   schema: {
     upload: {
       arg_count: 3,
@@ -54,6 +54,14 @@ module.exports = Object.freeze({
       ]
     },
     tags: {
+      arg_count: 0,
+      args:[]
+    },
+    actions: {
+      arg_count: 0,
+      args:[]
+    },
+    stats: {
       arg_count: 0,
       args:[]
     },

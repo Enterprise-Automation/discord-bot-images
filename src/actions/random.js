@@ -26,7 +26,12 @@ module.exports = function (connection, params, resolve, reject) {
   } else {
     query = `SELECT * FROM image_HTML_URl WHERE tag=?`
 
-    connection.query(query, params[2], function (err, result, fields) {
+    query = `
+    SELECT * FROM image_HTML_URl
+    WHERE tag LIKE ?`;
+
+
+    connection.query(query, `%${params[2]}%`, function (err, result, fields) {
       
       if (err) {
         reject({ "status": "failed", "status_message": "can't resolve query", "discord_message": "failed to find images with the tag of " + params[2] + "\ntry the command !image tags\nor you can try !image random *" });

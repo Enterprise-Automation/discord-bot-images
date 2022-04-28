@@ -37,7 +37,7 @@ module.exports = function (connection, params, resolve, reject) {
         diskTotal = info.total;
     });
 
-    console.log(formatMemoryUsageMB(diskTotal));
+
 
 
     resolve({

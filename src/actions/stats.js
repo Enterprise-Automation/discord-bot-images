@@ -7,16 +7,10 @@ module.exports = function (connection, params, resolve, reject) {
 
 
     var usage = process.cpuUsage();
-
     usage = process.cpuUsage(usage);
 
-    const formatMemoryUsageMB = (data) => `${Math.round(data / 1024 / 1024 * 100) / 100} MB`
-    const formatMemoryUsageGB = (data) => `${Math.round(((data / 1024 / 1024 * 100) / 100 ) / 1024 / 1024 * 100) / 100} GB`
-
     const memoryData = process.memoryUsage();
-    const os = require('os');
   
-
     var ut_sec = os.uptime();
     var ut_min = ut_sec/60;
     var ut_hour = ut_min/60;
@@ -38,24 +32,34 @@ module.exports = function (connection, params, resolve, reject) {
     });
 
 
-
-
     resolve({"status": "success", "status_message": "sending back image", "discord_message": `**Stats:**
-    Rss: ${formatMemoryUsageMB(memoryData.rss)} Total memory allocated for the process execution
-    HeapTotal: ${formatMemoryUsageMB(memoryData.heapTotal)}  Total size of the allocated heap
-    HeapUsed: ${formatMemoryUsageMB(memoryData.heapUsed)} Actual memory used during the execution
-    Total memory: ${formatMemoryUsageMB(os.totalmem())}
-    Free memory: ${formatMemoryUsageMB(os.freemem())}
+    Rss: ${formatBytes(memoryData.rss)} Total memory allocated for the process execution
+    HeapTotal: ${formatBytes(memoryData.heapTotal)}  Total size of the allocated heap
+    HeapUsed: ${formatBytes(memoryData.heapUsed)} Actual memory used during the execution
+    Total memory: ${formatBytes(os.totalmem())}
+    Free memory: ${formatBytes(os.freemem())}
     ----------------------------------------------------
     CPU: ${usage.user} Mhz cpu used during the execution
     CPUS: ${os.cpus().length}
     ----------------------------------------------------
-    Disk free ${formatMemoryUsageGB(diskFree)}
-    Disk total ${formatMemoryUsageGB(diskTotal)}
-    Disk used ${formatMemoryUsageGB(diskTotal - diskFree)}
+    Disk free ${formatBytes(diskFree)}
+    Disk total ${formatBytes(diskTotal)}
+    Disk used ${formatBytes(diskTotal - diskFree)}
     ----------------------------------------------------
     Up time: ${ut_hour} Hour(s) ${ut_min} minute(s) and ${ut_sec} second(s)
     `
     });
 
+}
+
+function formatBytes(bytes, decimals = 2) {
+    if (bytes === 0) return '0 Bytes';
+
+    const k = 1024;
+    const dm = decimals < 0 ? 0 : decimals;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 }

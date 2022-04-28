@@ -40,18 +40,21 @@ module.exports = function (connection, params, resolve, reject) {
 
 
 
-    resolve({
-        "status": "success", "status_message": "sending back image", "discord_message": `rss: ${formatMemoryUsageMB(memoryData.rss)} Total memory allocated for the process execution
-    heapTotal: ${formatMemoryUsageMB(memoryData.heapTotal)}  Total size of the allocated heap
-    heapUsed: ${formatMemoryUsageMB(memoryData.heapUsed)} Actual memory used during the execution
-    cpu: ${usage.user} Mhz cpu used during the execution
+    resolve({"status": "success", "status_message": "sending back image", "discord_message": `**Stats:**
+    Rss: ${formatMemoryUsageMB(memoryData.rss)} Total memory allocated for the process execution
+    HeapTotal: ${formatMemoryUsageMB(memoryData.heapTotal)}  Total size of the allocated heap
+    HeapUsed: ${formatMemoryUsageMB(memoryData.heapUsed)} Actual memory used during the execution
+    Total memory: ${formatMemoryUsageMB(os.totalmem())}
+    Free memory: ${formatMemoryUsageMB(os.freemem())}
+    ----------------------------------------------------
+    CPU: ${usage.user} Mhz cpu used during the execution
     CPUS: ${os.cpus().length}
-    totalmem: ${formatMemoryUsageMB(os.totalmem())}
-    cfreemem: ${formatMemoryUsageMB(os.freemem())}
-    Up time: ${ut_hour} Hour(s) ${ut_min} minute(s) and ${ut_sec} second(s)
+    ----------------------------------------------------
     Disk free ${formatMemoryUsageGB(diskFree)}
     Disk total ${formatMemoryUsageGB(diskTotal)}
     Disk used ${formatMemoryUsageGB(diskTotal - diskFree)}
+    ----------------------------------------------------
+    Up time: ${ut_hour} Hour(s) ${ut_min} minute(s) and ${ut_sec} second(s)
     `
     });
 

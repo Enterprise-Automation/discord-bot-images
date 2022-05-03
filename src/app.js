@@ -23,6 +23,6 @@ fs.readdirSync(path.join(__dirname, "routes")).forEach(function(file) {
   require(path.join(__dirname, "routes", file))(app);
 });
 
-app.listen(3000, () => {
-  console.log('listening on port 3000');
+app.listen(8000, () => {
+  console.log('listening on port 8000');
 });

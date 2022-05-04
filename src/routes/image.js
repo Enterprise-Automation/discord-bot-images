@@ -31,25 +31,6 @@ module.exports = function (app) {
 
 
 
-/*
-posablle need to use
-var string = 'http://localhost:3000/image/upload/https://cdn.discordapp.com/attachments/597445991699841056/965911868197703700/IMG_2164.PNG';
-var b = new Buffer(string);
-var s = b.toString('base64');
-console.log(s);
-
-
-var b = new Buffer(s, 'base64')
-var c = b.toString();
-console.log(c);
-
-// Decode the String
-*/
-
-
-
-
-// search by name 
 
 
 

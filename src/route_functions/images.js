@@ -11,21 +11,21 @@ var connection = mysql.createConnection({
 connection.connect();
 
 
-
-
 exports.func = req => {
+
     return new Promise((resolve, reject) => {
+
+        console.log(req.head);
+        console.log(req.body);
 
         connection.query(`SELECT * FROM image_HTML_URl`, function (err, result, fields) {
             if (err) {
                 reject(err)
             }
-            console.log(result);
-            resolve(result );
+
+            resolve(result);
         });
-
-
-
     });
 
 }
+

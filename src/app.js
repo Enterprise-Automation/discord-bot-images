@@ -13,7 +13,7 @@ app.use(express.text());
 app.use(fileUpload());
 app.use(express.raw({ type: 'image/*', limit: '5mb' }));
 
-
+app.use(express.json())
 
 
 fs.readdirSync(path.join(__dirname, "routes")).forEach(function(file) {

@@ -1,25 +1,23 @@
-
- var images = require('../route_functions/images.js');
- var imagesPost = require('../route_functions/imagesPost.js');
+var images = require('../route_functions/images.js');
 
  module.exports = function (app) {
    app.get('/api/images', (req, res, next) => {
  
-     var getResponse = images.func(req);
+     var getResponse = images.get(req);
      getResponse.then((response) => {
        res.send(response)
      }).catch(err => {
-       res.send(err);
+       res.status(500).send(err);
      });
    });
 
    app.post("/api/images", function(req, res) {
 
-    var getResponse = imagesPost.func(req);
+    var getResponse = images.post(req);
     getResponse.then((response) => {
       res.send(response)
     }).catch(err => {
-      res.send(err);
+      res.status(500).send(err);
     });
   });
  }

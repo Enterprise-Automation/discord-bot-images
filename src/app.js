@@ -7,6 +7,9 @@ const app = express();
 
 const fs = require("fs");
 
+const {init: initDB} = require('./utils/db')
+
+initDB()
 
 app.use(express.static('public'));
 app.use(express.text());

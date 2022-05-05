@@ -11,13 +11,19 @@ const getByID = async (id) => {
 }
 
 const getByTag = async (tag) => {
-    const rows = await query("SELECT * FROM image_HTML_URl WHERE tag=?", tag);
+    const rows = await query("SELECT * FROM image_HTML_URl WHERE tag LIKE ?", `%${tag}%`);
     return rows;
 }
 
 const getByName = async (name) => {
-    const rows = await query("SELECT * FROM image_HTML_URl WHERE Name_of_image=?", name);
-    return rows;
+    const [row] = await query("SELECT * FROM image_HTML_URl WHERE Name_of_image LIKE ?", `%${name}%`);
+    return row;
+
+}
+
+const getByUrl = async (url) => {
+    const [row] = await query("SELECT * FROM image_HTML_URl WHERE HTML_URL=?", `%${name}%`);
+    return row;
 
 }
 
@@ -39,6 +45,7 @@ const remove = async (id) => {
 
 module.exports = {
     getAll,
+    getByUrl,
     getByID,
     getByTag,
     getByName,

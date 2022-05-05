@@ -16,7 +16,7 @@ const getByTagLike = async (tag) => {
 }
 
 const getByNameLike = async (name) => {
-    const rows = await query("SELECT * FROM image_HTML_URl WHERE Name_of_image LIKE ?", `%${name}%`);
+    const rows = await query("SELECT * FROM image_HTML_URl WHERE Name_of_image LIKE ?", '%'+name+'%');
     return rows;
 
 }

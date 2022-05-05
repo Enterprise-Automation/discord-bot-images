@@ -16,7 +16,13 @@ const getByTagLike = async (tag) => {
 }
 
 const getByNameLike = async (name) => {
-    const [row] = await query("SELECT * FROM image_HTML_URl WHERE Name_of_image LIKE ?", `%${name}%`);
+    const rows = await query("SELECT * FROM image_HTML_URl WHERE Name_of_image LIKE ?", `%${name}%`);
+    return rows;
+
+}
+
+const getByName = async (name) => {
+    const [row] = await query("SELECT * FROM image_HTML_URl WHERE Name_of_image=?", name);
     return row;
 
 }
@@ -28,12 +34,13 @@ const getByUrl = async (url) => {
 }
 
 const create = async (url, name, tag) => {
-    const response = await query("INSERT INTO image_HTML_URl (HTML_URL, Name_of_image, tag) VALUES (?, ?, ?)"  [url, name , tag]);
+    console.log('url =' + url + ' name = ' + name + ' tag = ' + tag )
+    const response = await query("INSERT INTO image_HTML_URl (HTML_URL, Name_of_image, tag) VALUES (?, ?, ?)", [url, name , tag]);
     return response;
 }
 
 const update = async (id, name, tag) => {
-    const response = await query("UPDATE image_HTML_URl SET Name_of_image=?, tag=? WHERE id=?" [name , tag, id]);
+    const response = await query("UPDATE image_HTML_URl SET Name_of_image=?, tag=? WHERE id=?" , [name , tag, id]);
     return response;
 }
 
@@ -54,6 +61,7 @@ module.exports = {
     getByID,
     getByTagLike,
     getByNameLike,
+    getByName,
     create,
     update,
     remove,

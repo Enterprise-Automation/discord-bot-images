@@ -10,7 +10,8 @@ module.exports = function (connection, params, resolve, reject) {
     } else {
 
         try {
-            let rows = await update(params[2]);
+            //(id, name, tag) 
+            let rows = await update(params[2], params[3], params[4]);
             resolve({ "status": "success", "status_message": "Image Edited", "discord_message": "Succesfully edited image data" });
         } catch (err) {
             reject({ "status": "Fail", "status_message": "Edit Fail", "discord_message": "Edit images data" });

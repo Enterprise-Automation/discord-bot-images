@@ -1,7 +1,11 @@
+const { getByUrl, getByName, create } = require('../controllers/images.controller');
 
-let query = "";
-module.exports = function (connection, params, resolve, reject) {
+module.exports = async function (connection, params, resolve, reject) {
 
+
+    console.log('params[2] url ' + params[2]);
+    console.log('params[3] name ' + params[3]);
+    console.log('params[4] tag ' + params[4]);
 
     if (params[2] == null) {
         reject({ "status": "failed", "status_message": "sending back image", "discord_message": "missing params url" });
@@ -16,40 +20,25 @@ module.exports = function (connection, params, resolve, reject) {
 
     }
 
-    query = `SELECT * FROM image_HTML_URl WHERE HTML_URL=?`;
 
-    connection.query(query, params[2], function (err, result, fields) {
-        if (err) {
-            reject(err)
-        }
+    try {
+        let rows = await getByUrl(params[2]);
+        reject({ "status": "failed", "status_message": "sending back image", "discord_message": "image already in saved" + "\nimage is saved as;\nid: " + rows.id + " name: " + rows.Name_of_image });
+    } catch (err) {
+
         try {
-            reject({ "status": "failed", "status_message": "sending back image", "discord_message": "image already in saved" + "\nimage is saved as;\nid: " + result[0].id + " name: " + result[0].Name_of_image });
-        } catch (error) {
+            let rows = await getByName(params[3]);
+            reject({ "status": "failed", "status_message": "sending back image", "discord_message": "image already in saved" + "\nimage is saved as;\nid: " + rows.id + " name: " + rows.Name_of_image });
+        } catch (err) {
 
-            query = `SELECT * FROM image_HTML_URl WHERE Name_of_image=?`;
- 
-            connection.query(query, params[3], function (err, result, fields) {
-                if (err) {
-                    reject(err)
-                }
-                try {
-                    reject({ "status": "failed", "status_message": "sending back image", "discord_message": "image already in saved urnder that name" + "\nimage is saved as;\nid: " + result[0].id + " name: " + result[0].Name_of_image });
-                } catch (error) {
+            try {
 
-                    query = `INSERT INTO image_HTML_URl 
-                  (HTML_URL, Name_of_image, tag) 
-                  VALUES
-                    (?, ?, ?)`;
- 
-                    connection.query(query, [params[2], params[3], params[4]], function (err, result, fields) {
-                        if (err) {
-                            reject({ "status": "failed", "status_message": "can't resolve query", "discord_message": "Failed to upload image (Url could be to big)" })
-                        }
-                        resolve({ "status": "success", "status_message": "sending back image", "discord_message": "Upload image. id: " + result.insertId + " Name: " + params[3] });
-                    });
-                }
-            });
+                let rows = await create(params[2], params[3], params[4]);
+                console.log(rows);
+                resolve({ "status": "success", "status_message": "sending back image", "discord_message": "Upload image. id: " + rows.insertId + " Name: " + params[3] });
+            } catch (err) {
+                reject({ "status": "failed", "status_message": "can't resolve query", "discord_message": "Failed to upload image (Url could be to big)" })
+            }
         }
-    });
-
+    }
 }

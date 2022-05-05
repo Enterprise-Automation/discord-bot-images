@@ -2,7 +2,7 @@ const { remove } = require('../controllers/images.controller');
 let query = "";
 module.exports = async function (connection, params, resolve, reject) {
 
-    req.get("user") != "EAS-rhysmorgan1986"
+   // req.get("user") != "EAS-rhysmorgan1986"
     if (req.get("user") != "EAS-Clark") {
         resolve({ "status": "Fail", "status_message": "Not Authorised", "discord_message": "Not authorised to delete images" });
 

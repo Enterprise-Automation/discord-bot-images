@@ -42,6 +42,11 @@ const remove = async (id) => {
     return response;
 }
 
+const countTags = async () => {
+    const rows = await query("SELECT tag, count(*) FROM image_HTML_URl GROUP BY tag");
+    return rows;
+}
+
 
 module.exports = {
     getAll,
@@ -51,5 +56,6 @@ module.exports = {
     getByName,
     create,
     update,
-    remove
+    remove,
+    countTags
 }

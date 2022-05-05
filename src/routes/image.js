@@ -19,7 +19,7 @@ var sql = require('../route_functions/sql.js');
 
 module.exports = function (app) {
   app.get('/api/command/:command', (req, res, next) => {
-
+    
     var getResponse = sql.func(req);
     getResponse.then((response) => {
       res.send(response)

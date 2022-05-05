@@ -10,19 +10,19 @@ const getByID = async (id) => {
   return row;
 }
 
-const getByTag = async (tag) => {
+const getByTagLike = async (tag) => {
     const rows = await query("SELECT * FROM image_HTML_URl WHERE tag LIKE ?", `%${tag}%`);
     return rows;
 }
 
-const getByName = async (name) => {
+const getByNameLike = async (name) => {
     const [row] = await query("SELECT * FROM image_HTML_URl WHERE Name_of_image LIKE ?", `%${name}%`);
     return row;
 
 }
 
 const getByUrl = async (url) => {
-    const [row] = await query("SELECT * FROM image_HTML_URl WHERE HTML_URL=?", `%${name}%`);
+    const [row] = await query("SELECT * FROM image_HTML_URl WHERE HTML_URL=?", url);
     return row;
 
 }
@@ -32,8 +32,8 @@ const create = async (url, name, tag) => {
     return response;
 }
 
-const update = async (id, url, name, tag) => {
-    const response = await query("UPDATE image_HTML_URl SET  HTML_URL=?, Name_of_image=?, tag=? WHERE id=?" [url, name , tag, id]);
+const update = async (id, name, tag) => {
+    const response = await query("UPDATE image_HTML_URl SET Name_of_image=?, tag=? WHERE id=?" [name , tag, id]);
     return response;
 }
 
@@ -52,8 +52,8 @@ module.exports = {
     getAll,
     getByUrl,
     getByID,
-    getByTag,
-    getByName,
+    getByTagLike,
+    getByNameLike,
     create,
     update,
     remove,

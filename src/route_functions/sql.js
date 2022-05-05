@@ -6,7 +6,7 @@ const search = require('../actions/search.js');
 const tags = require('../actions/tags.js');
 const random = require('../actions/random.js');
 const deletefun = require('../actions/delete.js');
-const edit = require('../actions/upload.js');
+const edit = require('../actions/edit.js');
 const stats = require('../actions/stats.js');
 const action = require('../actions/action.js');
 

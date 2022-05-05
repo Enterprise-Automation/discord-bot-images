@@ -2,11 +2,7 @@ const { getByUrl, getByName, create } = require('../controllers/images.controlle
 
 module.exports = async function (connection, params, resolve, reject) {
 
-
-    console.log('params[2] url ' + params[2]);
-    console.log('params[3] name ' + params[3]);
-    console.log('params[4] tag ' + params[4]);
-
+    console.log('this is uploads!')
     if (params[2] == null) {
         reject({ "status": "failed", "status_message": "sending back image", "discord_message": "missing params url" });
 

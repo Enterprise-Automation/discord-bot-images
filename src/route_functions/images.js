@@ -11,6 +11,9 @@ const action = require('../actionsUi/action.js');
 
 exports.get = async req => {
 
+    console.log('hello');
+    console.log(req.headers.action);
+
     return new Promise(async (resolve, reject) => {
 
         switch (req.headers.action) {
@@ -50,7 +53,7 @@ exports.get = async req => {
                 stats(req, resolve, reject);
 
                 break;
-            case "actions":
+            case "action":
 
                 action(req, resolve, reject);
 

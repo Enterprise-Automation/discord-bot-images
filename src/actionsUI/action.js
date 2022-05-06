@@ -3,7 +3,7 @@
 let query = "";
 module.exports = async function (req, resolve, reject) {
 
-    resolve({ "status": "success", "status_message": "Get all actions", "discord_message": `How to use: 
+    resolve({"status_code": 200, "response": `How to use: 
     !image <action>
     action:
     **search** <id> - Get a image from the id

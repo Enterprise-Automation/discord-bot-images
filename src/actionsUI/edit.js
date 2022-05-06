@@ -2,18 +2,18 @@ const { update, getByName } = require('../controllers/images.controller');
 
 
 module.exports = async function (req, resolve, reject) {
-    console.log('hello there ');
+    console.log('hello there');
 
-    if (req.get("user") != "EAS-Clark") {
-        resolve({ "status": "Fail", "status_message": "Not Authorised", "discord_message": "Not authorised to edit images" });
+    if (req.headers.user != "EAS-Clark") {
+        resolve({"status_code": 401, "response": "Not authorised to edit images" });
 
     } else {
 
         try {
 
-            let rows = await getByName(params[3]);
-            if (rows.Name_of_image == params[3]) {
-                reject({ "status": "Fail", "status_message": "Edit Fail", "discord_message": "can't edit images data (File with same name)" });
+            let rows = await getByName(req.headers.name);
+            if (rows.Name_of_image == req.headers.name) {
+                reject({"status_code": 406, "response": "Can't edit images data (File with same name)" });
             }
 
 
@@ -21,12 +21,11 @@ module.exports = async function (req, resolve, reject) {
 
             try {
                 //(id, name, tag) 
-                let rows = await update(params[2], params[3], params[4]);
+                await update(req.headers.id, req.headers.name , req.headers.tag);
 
-
-                resolve({ "status": "success", "status_message": "Image Edited", "discord_message": "Succesfully edited image data" });
+                resolve({"status_code": 200, "response": "Succesfully edited image data" });
             } catch (err) {
-                reject({ "status": "Fail", "status_message": "Edit Fail", "discord_message": "can't edit images data" });
+                reject({"status_code": 406, "response": "Can't edit images data" });
             }
 
         }

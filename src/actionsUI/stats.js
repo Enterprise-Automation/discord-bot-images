@@ -2,7 +2,6 @@ const process = require('process');
 const os = require('os');
 const disk = require('diskusage');
 
-let query = "";
 module.exports = async function (req, resolve, reject) {
 
 
@@ -32,7 +31,7 @@ module.exports = async function (req, resolve, reject) {
     });
 
 
-    resolve({"status": "success", "status_message": "sending back image", "discord_message": `**Stats:**
+    resolve({  "status_code": 200, "response": `**Stats:**
     Rss: ${formatBytes(memoryData.rss)} Total memory allocated for the process execution
     HeapTotal: ${formatBytes(memoryData.heapTotal)}  Total size of the allocated heap
     HeapUsed: ${formatBytes(memoryData.heapUsed)} Actual memory used during the execution

@@ -5,28 +5,29 @@ let randomNumber;
 module.exports = async function (req, resolve, reject) {
 
 
+
   console.log(params);
-  if (params[2] == '*') {
+  if (req.headers.input == '*') {
 
     try {
       let rows = await getAll();
       randomNumber = getRandomInt(0, rows.length - 1);
-      resolve({ "status": "success", "status_message": "sending back image", "discord_message": rows[randomNumber].HTML_URL });
+      resolve({   "status_code": 200, "response": '' +  rows[randomNumber].HTML_URL });
     } catch (error) {
-      reject({ "status": "failed", "status_message": "can't resolve query", "discord_message": "failed to find images with tags" });
+      reject({  "status_code": 404, "response": "failed to find images with tags" });
     }
 
 
   } else {
 
     try {
-      let rows = await getByTagLike(params[2]);
+      let rows = await getByTagLike(req.headers.input);
      
       randomNumber = getRandomInt(0, rows.length - 1);
   
-      resolve({ "status": "success", "status_message": "sending back image", "discord_message": rows[randomNumber].HTML_URL });
+      resolve({   "status_code": 200, "response": '' + rows[randomNumber].HTML_URL });
     } catch (error) {
-      reject({ "status": "failed", "status_message": "can't resolve query", "discord_message": "failed to find images with the tag of " + params[2] });
+      reject({  "status_code": 404, "response": "failed to find images with the tag of " + req.headers.input });
     }
 
   }

@@ -2,39 +2,41 @@ const { getByUrl, getByName, create } = require('../controllers/images.controlle
 
 module.exports = async function (req, resolve, reject) {
 
-    console.log('this is uploads!')
-    if (params[2] == null) {
-        reject({ "status": "failed", "status_message": "sending back image", "discord_message": "missing params url" });
+    
+    console.log(req.body)
+    if (req.body.HTML_URL == null) {
+        reject({"status_code": 400, "response": "missing params url" });
 
     }
-    if (params[3] == null) {
-        reject({ "status": "failed", "status_message": "sending back image", "discord_message": "missing params name" });
+    if (req.body.Name_of_image == null) {
+        reject({"status_code": 400, "response": "missing params name" });
 
     }
-    if (params[4] == null) {
-        reject({ "status": "failed", "status_message": "sending back image", "discord_message": "missing params tag" });
+    if (req.body.tag == null) {
+        reject({"status_code": 400, "response": "missing params tag" });
 
     }
 
 
     try {
-        let rows = await getByUrl(params[2]);
-        reject({ "status": "failed", "status_message": "sending back image", "discord_message": "image already in saved" + "\nimage is saved as;\nid: " + rows.id + " name: " + rows.Name_of_image });
+        let rows = await getByUrl(req.body.HTML_URL);
+        reject({"status_code": 400, "response": "image already in saved" + "\nimage is saved as;\nid: " + rows.id + " name: " + rows.Name_of_image });
     } catch (err) {
 
         try {
-            let rows = await getByName(params[3]);
-            reject({ "status": "failed", "status_message": "sending back image", "discord_message": "image already in saved" + "\nimage is saved as;\nid: " + rows.id + " name: " + rows.Name_of_image });
+            let rows = await getByName(req.body.Name_of_image );
+            reject({  "status_code": 400, "response": "image already in saved" + "\nimage is saved as;\nid: " + rows.id + " name: " + rows.Name_of_image });
         } catch (err) {
 
             try {
 
-                let rows = await create(params[2], params[3], params[4]);
+                let rows = await create(req.body.HTML_URL, req.body.Name_of_image , req.body.tag);
                 console.log(rows);
-                resolve({ "status": "success", "status_message": "sending back image", "discord_message": "Upload image. id: " + rows.insertId + " Name: " + params[3] });
+                resolve({"status_code": 200, "response": "Upload image. id: " + rows.insertId + " Name: " + req.body.Name_of_image});
             } catch (err) {
-                reject({ "status": "failed", "status_message": "can't resolve query", "discord_message": "Failed to upload image (Url could be to big)" })
+                reject({  "status_code": 400, "response": "Failed to upload image (Url could be to big)" })
             }
         }
     }
 }
+

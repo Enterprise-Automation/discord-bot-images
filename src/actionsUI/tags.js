@@ -4,7 +4,7 @@ module.exports = async function (req, resolve, reject) {
 
   try {
     let rows = await countTags();
-    resolve({ "status": "success", "status_message": "Retruning tags", "discord_message": "Lit of tags: \n" + arrayToString(rows) });
+    resolve({"status_code": 200, "response": arrayToString(rows)});
   } catch (err) {
     reject(err);
   }

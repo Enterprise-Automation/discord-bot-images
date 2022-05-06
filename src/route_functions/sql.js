@@ -1,14 +1,14 @@
 const Promise = require('promise');
 const mysql = require('mysql');
-const upload = require('../actions/upload.js');
-const get = require('../actions/get.js');
-const search = require('../actions/search.js');
-const tags = require('../actions/tags.js');
-const random = require('../actions/random.js');
-const deletefun = require('../actions/delete.js');
-const edit = require('../actions/edit.js');
-const stats = require('../actions/stats.js');
-const action = require('../actions/action.js');
+const upload = require('../actionsDiscord/upload.js');
+const get = require('../actionsDiscord/get.js');
+const search = require('../actionsDiscord/search.js');
+const tags = require('../actionsDiscord/tags.js');
+const random = require('../actionsDiscord/random.js');
+const deletefun = require('../actionsDiscord/delete.js');
+const edit = require('../actionsDiscord/edit.js');
+const stats = require('../actionsDiscord/stats.js');
+const action = require('../actionsDiscord/action.js');
 
 
 var connection = mysql.createConnection({

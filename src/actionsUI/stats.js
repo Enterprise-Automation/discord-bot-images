@@ -31,20 +31,20 @@ module.exports = async function (req, resolve, reject) {
     });
 
 
-    resolve({  "status_code": 200, "response": `**Stats:**
+    resolve({  "status_code": 200, "response": `
     Rss: ${formatBytes(memoryData.rss)} Total memory allocated for the process execution
     HeapTotal: ${formatBytes(memoryData.heapTotal)}  Total size of the allocated heap
     HeapUsed: ${formatBytes(memoryData.heapUsed)} Actual memory used during the execution
     Total memory: ${formatBytes(os.totalmem())}
     Free memory: ${formatBytes(os.freemem())}
-    ----------------------------------------------------
+    
     CPU: ${usage.user} Mhz cpu used during the execution
     CPUS: ${os.cpus().length}
-    ----------------------------------------------------
+    
     Disk free ${formatBytes(diskFree)}
     Disk total ${formatBytes(diskTotal)}
     Disk used ${formatBytes(diskTotal - diskFree)}
-    ----------------------------------------------------
+    
     Up time: ${ut_hour} Hour(s) ${ut_min} minute(s) and ${ut_sec} second(s)
     `
     });

@@ -13,7 +13,7 @@ module.exports = async function (req, resolve, reject) {
 
 function arrayToString(array) {
 
-  let stringArry = "Tag: name - number of tag\n---------------------------\n";
+  let stringArry = "";
 
   for (let i = 0; i <= array.length - 1; i++) {
     stringArry = stringArry + "Tag: " + array[i]["tag"] + " - " + array[i]["count(*)"] + "\n"

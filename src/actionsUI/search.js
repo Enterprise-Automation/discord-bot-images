@@ -1,6 +1,6 @@
 const { getByID, getByNameLike, getByUrl } = require('../controllers/images.controller');
 
-module.exports = async function (connection, params, resolve, reject) {
+module.exports = async function (req, resolve, reject) {
 
     if (params[2].toLowerCase() === "id") {
 

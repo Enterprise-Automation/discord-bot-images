@@ -1,7 +1,7 @@
 
 
 let query = "";
-module.exports = function (connection, params, resolve, reject) {
+module.exports = async function (req, resolve, reject) {
 
     resolve({ "status": "success", "status_message": "Get all actions", "discord_message": `How to use: 
     !image <action>

@@ -1,7 +1,7 @@
 const { update, getByName } = require('../controllers/images.controller');
 
 
-module.exports = async function (connection, params, resolve, reject) {
+module.exports = async function (req, resolve, reject) {
     console.log('hello there ');
 
     if (req.get("user") != "EAS-Clark") {

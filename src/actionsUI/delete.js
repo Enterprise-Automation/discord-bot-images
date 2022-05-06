@@ -1,6 +1,6 @@
 const { remove } = require('../controllers/images.controller');
 let query = "";
-module.exports = async function (connection, params, resolve, reject) {
+module.exports = async function (req, resolve, reject) {
 
    // req.get("user") != "EAS-rhysmorgan1986"
     if (req.get("user") != "EAS-Clark") {

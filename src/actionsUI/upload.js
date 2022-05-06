@@ -1,6 +1,6 @@
 const { getByUrl, getByName, create } = require('../controllers/images.controller');
 
-module.exports = async function (connection, params, resolve, reject) {
+module.exports = async function (req, resolve, reject) {
 
     console.log('this is uploads!')
     if (params[2] == null) {

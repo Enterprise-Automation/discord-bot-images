@@ -3,7 +3,7 @@ const os = require('os');
 const disk = require('diskusage');
 
 let query = "";
-module.exports = function (connection, params, resolve, reject) {
+module.exports = async function (req, resolve, reject) {
 
 
     var usage = process.cpuUsage();

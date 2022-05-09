@@ -13,25 +13,15 @@ module.exports = function (app) {
     }
   });
 
-  app.get('/api/people', async (req, res) => {
+  app.post("/api/images", async (req, res) =>{
+
     try {
-      const person = await getPerson()
-      res.json(person)
+      var getResponse = await images.post(req);
+      res.json(getResponse)
+
     } catch (err) {
-      res.json({ error: "Something went wrong" })
+      res.json(err);
     }
-  })
-
-  app.post("/api/images", function (req, res) {
-
-    var getResponse = images.post(req);
-    getResponse.then((response) => {
-      res.send(response)
-    }).catch(err => {
-      console.log('status code: ' + err.status_code);
-      console.log('status response: ' + err.response);
-      res.status(err.status_code).send(err.response);
-    });
   });
 }
 

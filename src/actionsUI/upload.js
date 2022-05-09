@@ -2,8 +2,7 @@ const { getByUrl, getByName, create } = require('../controllers/images.controlle
 
 module.exports = async function (req, resolve, reject) {
 
-    
-    console.log(req.body)
+
     if (req.body.HTML_URL == null) {
         reject({"status_code": 400, "response": "missing params url" });
 
@@ -12,7 +11,7 @@ module.exports = async function (req, resolve, reject) {
         reject({"status_code": 400, "response": "missing params name" });
 
     }
-    if (req.body.tag == null) {
+    if (req.body.tag == null) { 
         reject({"status_code": 400, "response": "missing params tag" });
 
     }

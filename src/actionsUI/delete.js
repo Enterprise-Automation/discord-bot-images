@@ -10,6 +10,7 @@ module.exports = async function (req, resolve, reject) {
 
         try {
             await remove(req.headers.id);
+            
             resolve({"status_code": 202, "response": "Succesfully deleted image" });
         } catch (err) {
             reject({"status_code": 406, "response": "Fail to delete images" });

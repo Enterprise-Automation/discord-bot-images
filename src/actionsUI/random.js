@@ -20,7 +20,9 @@ module.exports = async function (req, resolve, reject) {
 
     try {
       let rows = await getByTagLike(req.headers.input);
-     
+
+      rows[0].id;
+
       randomNumber = getRandomInt(0, rows.length - 1);
 
       resolve({   "status_code": 200, "response": rows[randomNumber]});

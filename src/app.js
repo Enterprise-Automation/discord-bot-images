@@ -1,7 +1,6 @@
-
+require('dotenv').config()
 const express = require('express');
 const fileUpload = require('express-fileupload');
-
 const path = require('path');
 const app = express();
 
@@ -29,3 +28,5 @@ fs.readdirSync(path.join(__dirname, "routes")).forEach(function(file) {
 app.listen(8000, () => {
   console.log('listening on port 8000');
 });
+
+// docker run --name some-mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=my-Renegade187! -e MYSQL_DATABASE=discord-bot-images -d mysql:5.7

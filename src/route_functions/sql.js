@@ -11,14 +11,6 @@ const stats = require('../actionsDiscord/stats.js');
 const action = require('../actionsDiscord/action.js');
 
 
-var connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'example',
-  database: 'mysql'
-});
-
-connection.connect();
 
 // http://vcenter.easlab.co.uk
 

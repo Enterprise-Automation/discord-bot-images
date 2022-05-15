@@ -41,7 +41,7 @@ spec:
             - name: DB_PASSWORD
               value: sUpErSeCrEtPaSsWoRd
             - name: DB_SCHEMA
-              value: discord-bot-images
+              value: discord-bot
           imagePullPolicy: {{ .Values.image.pullPolicy }}
       containers:
         - name: {{ .Chart.Name }}
@@ -56,7 +56,7 @@ spec:
             - name: DB_PASSWORD
               value: sUpErSeCrEtPaSsWoRd
             - name: DB_SCHEMA
-              value: discord-bot-images
+              value: discord-bot
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
@@ -64,17 +64,6 @@ spec:
               protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-        - name: mysql
-          image: mysql:5.7
-          env:
-            - name: MYSQL_ROOT_PASSWORD
-              value: sUpErSeCrEtPaSsWoRd
-            - name: MYSQL_DATABASE
-              value: discord-bot-images
-          ports:
-            - name: sql
-              containerPort: 3306
-              protocol: TCP
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

@@ -1,28 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "discord-bot.fullname" . }}
+  name: {{ include "helm.fullname" . }}
   labels:
-    {{- include "discord-bot.labels" . | nindent 4 }}
+    {{- include "helm.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "discord-bot.selectorLabels" . | nindent 6 }}
+      {{- include "helm.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       annotations:
         {{- toYaml .Values.annotations | nindent 8 }}
       labels:
-        {{- include "discord-bot.selectorLabels" . | nindent 8 }}
+        {{- include "helm.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "discord-bot.serviceAccountName" . }}
+      serviceAccountName: {{ include "helm.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -76,22 +76,22 @@ metadata:
   labels:apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "discord-bot.fullname" . }}
+  name: {{ include "helm.fullname" . }}
   labels:
-    {{- include "discord-bot.labels" . | nindent 4 }}
+    {{- include "helm.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "discord-bot.selectorLabels" . | nindent 6 }}
+      {{- include "helm.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       annotations:
         {{- toYaml .Values.annotations | nindent 8 }}
       labels:
-        {{- include "discord-bot.selectorLabels" . | nindent 8 }}
+        {{- include "helm.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:

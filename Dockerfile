@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM nikolaik/python-nodejs:latest
 
 COPY src /var/app
 

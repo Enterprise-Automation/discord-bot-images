@@ -1,12 +1,12 @@
-const upload = require('../actionsUi/upload.js');
-const get = require('../actionsUi/get.js');
-const search = require('../actionsUi/search.js');
-const tags = require('../actionsUi/tags.js');
-const random = require('../actionsUi/random.js');
-const deletefun = require('../actionsUi/delete.js');
-const edit = require('../actionsUi/edit.js');
-const stats = require('../actionsUi/stats.js');
-const action = require('../actionsUi/action.js');
+const upload = require('../actionsUI/upload.js');
+const get = require('../actionsUI/get.js');
+const search = require('../actionsUI/search.js');
+const tags = require('../actionsUI/tags.js');
+const random = require('../actionsUI/random.js');
+const deletefun = require('../actionsUI/delete.js');
+const edit = require('../actionsUI/edit.js');
+const stats = require('../actionsUI/stats.js');
+const action = require('../actionsUI/action.js');
 
 
 exports.get = async req => {
